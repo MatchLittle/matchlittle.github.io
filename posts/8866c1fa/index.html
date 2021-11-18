@@ -9,7 +9,7 @@
     <meta name="description" content="外网访问ssh局域网链接从外网 SSH 进局域网，反向代理+正向代理解决方案冰雪殿发布于 2015-04-29 🔥🔥🔥 SegmentFault D-Day 后端架构演进之路（杭州站），快来报名 &gt;&gt;&gt; 相信很多同学都会碰到这样一个问题。在实验室有一台机器用于日常工作，当我回家了或者回宿舍之后因为没法进入内网，所以访问不到了。如果这个时候我需要 SSH 进去做一下工作，那么">
 <meta property="og:type" content="article">
 <meta property="og:title" content="外网访问ssh局域网链接">
-<meta property="og:url" content="https://www.cnblogs.com/nanstar/posts/8866c1fa/index.html">
+<meta property="og:url" content="https://matchlittle.github.io/posts/8866c1fa/index.html">
 <meta property="og:site_name" content="Mdb">
 <meta property="og:description" content="外网访问ssh局域网链接从外网 SSH 进局域网，反向代理+正向代理解决方案冰雪殿发布于 2015-04-29 🔥🔥🔥 SegmentFault D-Day 后端架构演进之路（杭州站），快来报名 &gt;&gt;&gt; 相信很多同学都会碰到这样一个问题。在实验室有一台机器用于日常工作，当我回家了或者回宿舍之后因为没法进入内网，所以访问不到了。如果这个时候我需要 SSH 进去做一下工作，那么">
 <meta property="og:locale" content="zh_CN">
@@ -21,17 +21,17 @@
     
         
           
-              <link rel="shortcut icon" href="/nanstar/images/favicon.ico">
+              <link rel="shortcut icon" href="/images/favicon.ico">
           
         
         
           
-            <link rel="icon" type="image/png" href="/nanstar/images/favicon-192x192.png" sizes="192x192">
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
           
         
         
           
-            <link rel="apple-touch-icon" sizes="180x180" href="/nanstar/images/apple-touch-icon.png">
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
           
         
     
@@ -39,12 +39,12 @@
     <title>外网访问ssh局域网链接</title>
     <!-- styles -->
     
-<link rel="stylesheet" href="/nanstar/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
     <!-- rss -->
     
     
-      <link rel="alternate" href="/nanstar/true" title="Mdb" type="application/atom+xml" />
+      <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
     
 <meta name="generator" content="Hexo 5.4.0"></head>
 
@@ -58,11 +58,11 @@
     <span id="nav">
       <ul>
          
-          <li><a href="/nanstar/">主页</a></li>
+          <li><a href="/">主页</a></li>
          
-          <li><a href="/nanstar/about/">关于</a></li>
+          <li><a href="/about/">关于</a></li>
          
-          <li><a href="/nanstar/archives/">文章</a></li>
+          <li><a href="/archives/">文章</a></li>
          
           <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
         
@@ -72,10 +72,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/nanstar/posts/3ed065f3/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        <li><a class="icon" href="/posts/3ed065f3/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
         
         
-        <li><a class="icon" href="/nanstar/posts/c6e0d798/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        <li><a class="icon" href="/posts/c6e0d798/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
@@ -88,16 +88,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&text=外网访问ssh局域网链接"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&is_video=false&description=外网访问ssh局域网链接"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=外网访问ssh局域网链接&body=Check out this article: https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&name=外网访问ssh局域网链接&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://matchlittle.github.io/posts/8866c1fa/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://matchlittle.github.io/posts/8866c1fa/&text=外网访问ssh局域网链接"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://matchlittle.github.io/posts/8866c1fa/&is_video=false&description=外网访问ssh局域网链接"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=外网访问ssh局域网链接&body=Check out this article: https://matchlittle.github.io/posts/8866c1fa/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://matchlittle.github.io/posts/8866c1fa/&name=外网访问ssh局域网链接&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -178,7 +178,7 @@
 <h3 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h3><ol>
 <li> 建立 A 机器到 B 机器的反向代理【A 机器上操作】</li>
 </ol>
-<p>ssh -fCNR <port_b1>:localhost:22 <a href="mailto:&#117;&#115;&#x72;&#95;&#98;&#x40;&#66;&#x2e;&#x42;&#46;&#66;&#46;&#x42;">&#117;&#115;&#x72;&#95;&#98;&#x40;&#66;&#x2e;&#x42;&#46;&#66;&#46;&#x42;</a></p>
+<p>ssh -fCNR <port_b1>:localhost:22 <a href="mailto:&#x75;&#115;&#114;&#95;&#98;&#64;&#66;&#x2e;&#x42;&#x2e;&#66;&#x2e;&#66;">&#x75;&#115;&#114;&#95;&#98;&#64;&#66;&#x2e;&#x42;&#x2e;&#66;&#x2e;&#66;</a></p>
 <p><code>&lt;port_b1&gt;</code> 为 B 机器上端口，用来与 A 机器上的22端口绑定。</p>
 <ol start="2">
 <li> 建立 B 机器上的正向代理，用作本地转发。做这一步是因为绑定后的 端口只支持本地访问【B 机器上操作】</li>
@@ -189,7 +189,7 @@
 <ol start="3">
 <li> 现在在 C 机器上可以通过 B 机器 ssh 到 A 机器</li>
 </ol>
-<p>ssh -p <portb2> <a href="mailto:&#x75;&#115;&#114;&#x61;&#x40;&#x42;&#46;&#x42;&#x2e;&#66;&#x2e;&#x42;">&#x75;&#115;&#114;&#x61;&#x40;&#x42;&#46;&#x42;&#x2e;&#66;&#x2e;&#x42;</a></p>
+<p>ssh -p <portb2> <a href="mailto:&#x75;&#x73;&#x72;&#x61;&#x40;&#66;&#46;&#66;&#46;&#x42;&#x2e;&#66;">&#x75;&#x73;&#x72;&#x61;&#x40;&#66;&#46;&#66;&#46;&#x42;&#x2e;&#66;</a></p>
 <p>至此方案完成。</p>
 <p>附：</p>
 <h3 id="SSH-参数解释"><a href="#SSH-参数解释" class="headerlink" title="SSH 参数解释"></a>SSH 参数解释</h3><p>-f 后台运行<br>-C 允许压缩数据<br>-N 不执行任何命令<br>-R 将端口绑定到远程服务器，反向代理<br>-L 将端口绑定到本地客户端，正向代理</p>
@@ -207,11 +207,11 @@
     <div id="nav-footer" style="display: none">
       <ul>
          
-          <li><a href="/nanstar/">主页</a></li>
+          <li><a href="/">主页</a></li>
          
-          <li><a href="/nanstar/about/">关于</a></li>
+          <li><a href="/about/">关于</a></li>
          
-          <li><a href="/nanstar/archives/">文章</a></li>
+          <li><a href="/archives/">文章</a></li>
          
           <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
         
@@ -224,16 +224,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&text=外网访问ssh局域网链接"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&is_video=false&description=外网访问ssh局域网链接"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=外网访问ssh局域网链接&body=Check out this article: https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&name=外网访问ssh局域网链接&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://matchlittle.github.io/posts/8866c1fa/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://matchlittle.github.io/posts/8866c1fa/&text=外网访问ssh局域网链接"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://matchlittle.github.io/posts/8866c1fa/&is_video=false&description=外网访问ssh局域网链接"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=外网访问ssh局域网链接&body=Check out this article: https://matchlittle.github.io/posts/8866c1fa/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://matchlittle.github.io/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://matchlittle.github.io/posts/8866c1fa/&name=外网访问ssh局域网链接&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -259,11 +259,11 @@
     <nav>
       <ul>
          
-          <li><a href="/nanstar/">主页</a></li>
+          <li><a href="/">主页</a></li>
          
-          <li><a href="/nanstar/about/">关于</a></li>
+          <li><a href="/about/">关于</a></li>
          
-          <li><a href="/nanstar/archives/">文章</a></li>
+          <li><a href="/archives/">文章</a></li>
          
           <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
         
@@ -276,25 +276,25 @@
 </html>
 <!-- styles -->
 
-<link rel="stylesheet" href="/nanstar/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 
-<link rel="stylesheet" href="/nanstar/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
 
 
-<link rel="stylesheet" href="/nanstar/lib/justified-gallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
 
 
 
 <!-- jquery -->
 
-<script src="/nanstar/lib/jquery/jquery.min.js"></script>
+<script src="/lib/jquery/jquery.min.js"></script>
 
 
-<script src="/nanstar/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
 
 
-<script src="/nanstar/js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <!-- Google Analytics -->
 
