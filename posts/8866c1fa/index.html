@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="外网访问ssh局域网链接从外网 SSH 进局域网，反向代理+正向代理解决方案冰雪殿发布于 2015-04-29 🔥🔥🔥 SegmentFault D-Day 后端架构演进之路（杭州站），快来报名 &gt;&gt;&gt; 相信很多同学都会碰到这样一个问题。在实验室有一台机器用于日常工作，当我回家了或者回宿舍之后因为没法进入内网，所以访问不到了。如果这个时候我需要 SSH 进去做一下工作，那么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="外网访问ssh局域网链接">
+<meta property="og:url" content="https://www.cnblogs.com/nanstar/posts/8866c1fa/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="外网访问ssh局域网链接从外网 SSH 进局域网，反向代理+正向代理解决方案冰雪殿发布于 2015-04-29 🔥🔥🔥 SegmentFault D-Day 后端架构演进之路（杭州站），快来报名 &gt;&gt;&gt; 相信很多同学都会碰到这样一个问题。在实验室有一台机器用于日常工作，当我回家了或者回宿舍之后因为没法进入内网，所以访问不到了。如果这个时候我需要 SSH 进去做一下工作，那么">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-17T06:59:27.381Z">
+<meta property="article:modified_time" content="2021-11-17T06:59:27.381Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/nanstar/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/nanstar/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/nanstar/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>外网访问ssh局域网链接</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/nanstar/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/nanstar/true" title="Mdb" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/nanstar/posts/3ed065f3/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/nanstar/posts/c6e0d798/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&text=外网访问ssh局域网链接"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&is_video=false&description=外网访问ssh局域网链接"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=外网访问ssh局域网链接&body=Check out this article: https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&name=外网访问ssh局域网链接&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AEssh%E5%B1%80%E5%9F%9F%E7%BD%91%E9%93%BE%E6%8E%A5"><span class="toc-number">1.</span> <span class="toc-text">外网访问ssh局域网链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8E%E5%A4%96%E7%BD%91-SSH-%E8%BF%9B%E5%B1%80%E5%9F%9F%E7%BD%91%EF%BC%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">从外网 SSH 进局域网，反向代理+正向代理解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">问题描述：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E7%8A%B6%E5%86%B5"><span class="toc-number">2.1.1.</span> <span class="toc-text">机器状况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-number">2.1.2.</span> <span class="toc-text">目标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.2.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82"><span class="toc-number">2.2.1.</span> <span class="toc-text">环境需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%96%BD%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.2.2.</span> <span class="toc-text">实施步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH-%E5%8F%82%E6%95%B0%E8%A7%A3%E9%87%8A"><span class="toc-number">2.2.3.</span> <span class="toc-text">SSH 参数解释</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        外网访问ssh局域网链接
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Mdb</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-11-17T06:59:27.381Z" itemprop="datePublished">2021-11-17</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="外网访问ssh局域网链接"><a href="#外网访问ssh局域网链接" class="headerlink" title="外网访问ssh局域网链接"></a>外网访问ssh局域网链接</h1><h1 id="从外网-SSH-进局域网，反向代理-正向代理解决方案"><a href="#从外网-SSH-进局域网，反向代理-正向代理解决方案" class="headerlink" title="从外网 SSH 进局域网，反向代理+正向代理解决方案"></a><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002718360">从外网 SSH 进局域网，反向代理+正向代理解决方案</a></h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/u/iceflying">冰雪殿</a>发布于 2015-04-29</p>
+<p><a target="_blank" rel="noopener" href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=526__zoneid=25__cb=84d1d326c9__oadest=https://segmentfault.com/e/1160000040440065">🔥🔥🔥 SegmentFault D-Day 后端架构演进之路（杭州站），快来报名 &gt;&gt;&gt;</a></p>
+<p>相信很多同学都会碰到这样一个问题。在实验室有一台机器用于日常工作，当我回家了或者回宿舍之后因为没法进入内网，所以访问不到了。如果这个时候我需要 SSH 进去做一下工作，那么怎么解决这个问题呢？本文将给出一种使用 SSH 的代理功能的解决方案。</p>
+<h2 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h2><h3 id="机器状况"><a href="#机器状况" class="headerlink" title="机器状况"></a>机器状况</h3><table>
+<thead>
+<tr>
+<th>机器号</th>
+<th>IP</th>
+<th>用户名</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>192.168.0.A</td>
+<td>usr_a</td>
+<td>目标服务器，在局域网中，可以访问 A</td>
+</tr>
+<tr>
+<td>B</td>
+<td>B.B.B.B</td>
+<td>usr_b</td>
+<td>代理服务器，在外网中，无法访问 A</td>
+</tr>
+<tr>
+<td>C</td>
+<td>-</td>
+<td>-</td>
+<td>可以直接访问 B，无法直接访问 A</td>
+</tr>
+</tbody></table>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>从 C 机器使用 SSH 访问 A</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 A 机器上做到 B 机器的反向代理；在 B 机器上做正向代理本地端口转发</p>
+<h3 id="环境需求"><a href="#环境需求" class="headerlink" title="环境需求"></a>环境需求</h3><ul>
+<li>  每台机器上都需要 SSH 客户端</li>
+<li>  A、B 两台机器上需要 SSH 服务器端。通常是 openssh-server。</li>
+</ul>
+<p>在 Ubuntu 上安装过程为</p>
+<p>sudo apt-get install openssl-server</p>
+<h3 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h3><ol>
+<li> 建立 A 机器到 B 机器的反向代理【A 机器上操作】</li>
+</ol>
+<p>ssh -fCNR <port_b1>:localhost:22 <a href="mailto:&#117;&#x73;&#114;&#95;&#98;&#x40;&#66;&#46;&#x42;&#46;&#66;&#x2e;&#66;">&#117;&#x73;&#114;&#95;&#98;&#x40;&#66;&#46;&#x42;&#46;&#66;&#x2e;&#66;</a></p>
+<p><code>&lt;port_b1&gt;</code> 为 B 机器上端口，用来与 A 机器上的22端口绑定。</p>
+<ol start="2">
+<li> 建立 B 机器上的正向代理，用作本地转发。做这一步是因为绑定后的 端口只支持本地访问【B 机器上操作】</li>
+</ol>
+<p>ssh -fCNL “*:<port_b2>:localhost:<port_b1>‘ localhost</p>
+<p><code>&lt;port_b2&gt;</code> 为本地转发端口，用以和外网通信，并将数据转发到 <code>&lt;port_b1&gt;</code>，实现可以从其他机器访问。</p>
+<p>其中的<code>*</code>表示接受来自任意机器的访问。</p>
+<ol start="3">
+<li> 现在在 C 机器上可以通过 B 机器 ssh 到 A 机器</li>
+</ol>
+<p>ssh -p <portb2> <a href="mailto:&#x75;&#115;&#x72;&#97;&#64;&#x42;&#46;&#66;&#x2e;&#x42;&#46;&#66;">&#x75;&#115;&#x72;&#97;&#64;&#x42;&#46;&#66;&#x2e;&#x42;&#46;&#66;</a></p>
+<p>至此方案完成。</p>
+<p>附：</p>
+<h3 id="SSH-参数解释"><a href="#SSH-参数解释" class="headerlink" title="SSH 参数解释"></a>SSH 参数解释</h3><p>-f 后台运行<br>-C 允许压缩数据<br>-N 不执行任何命令<br>-R 将端口绑定到远程服务器，反向代理<br>-L 将端口绑定到本地客户端，正向代理</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AEssh%E5%B1%80%E5%9F%9F%E7%BD%91%E9%93%BE%E6%8E%A5"><span class="toc-number">1.</span> <span class="toc-text">外网访问ssh局域网链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8E%E5%A4%96%E7%BD%91-SSH-%E8%BF%9B%E5%B1%80%E5%9F%9F%E7%BD%91%EF%BC%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">从外网 SSH 进局域网，反向代理+正向代理解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">问题描述：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E7%8A%B6%E5%86%B5"><span class="toc-number">2.1.1.</span> <span class="toc-text">机器状况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-number">2.1.2.</span> <span class="toc-text">目标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.2.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82"><span class="toc-number">2.2.1.</span> <span class="toc-text">环境需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%96%BD%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.2.2.</span> <span class="toc-text">实施步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH-%E5%8F%82%E6%95%B0%E8%A7%A3%E9%87%8A"><span class="toc-number">2.2.3.</span> <span class="toc-text">SSH 参数解释</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&text=外网访问ssh局域网链接"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&is_video=false&description=外网访问ssh局域网链接"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=外网访问ssh局域网链接&body=Check out this article: https://www.cnblogs.com/nanstar/posts/8866c1fa/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&title=外网访问ssh局域网链接"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/8866c1fa/&name=外网访问ssh局域网链接&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/nanstar/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/nanstar/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/nanstar/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/nanstar/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="sshd进程检测保活12345678910111213141516171819#!&#x2F;bin&#x2F;bashwhile truedo       if test $( pgrep -f sshd | wc -l ) -eq 0        then        date +%Y-%m-%d&amp;#x27; &amp;#x27;%T&amp;#x27; &amp;#x27;&quot;进程不存在&quot; &gt;&gt; ~&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sshd进程检测保活">
+<meta property="og:url" content="https://www.cnblogs.com/nanstar/posts/1ac29390/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="sshd进程检测保活12345678910111213141516171819#!&#x2F;bin&#x2F;bashwhile truedo       if test $( pgrep -f sshd | wc -l ) -eq 0        then        date +%Y-%m-%d&amp;#x27; &amp;#x27;%T&amp;#x27; &amp;#x27;&quot;进程不存在&quot; &gt;&gt; ~&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-17T06:59:27.377Z">
+<meta property="article:modified_time" content="2021-11-17T06:59:27.377Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/nanstar/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/nanstar/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/nanstar/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>sshd进程检测保活</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/nanstar/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/nanstar/true" title="Mdb" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/nanstar/posts/c6e0d798/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/nanstar/posts/a5c95fc6/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/1ac29390/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&text=sshd进程检测保活"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&is_video=false&description=sshd进程检测保活"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=sshd进程检测保活&body=Check out this article: https://www.cnblogs.com/nanstar/posts/1ac29390/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&name=sshd进程检测保活&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sshd%E8%BF%9B%E7%A8%8B%E6%A3%80%E6%B5%8B%E4%BF%9D%E6%B4%BB"><span class="toc-number">1.</span> <span class="toc-text">sshd进程检测保活</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        sshd进程检测保活
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Mdb</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-11-17T06:59:27.377Z" itemprop="datePublished">2021-11-17</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="sshd进程检测保活"><a href="#sshd进程检测保活" class="headerlink" title="sshd进程检测保活"></a>sshd进程检测保活</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/bin/</span>bash</span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">       <span class="keyword">if</span> test $( pgrep -f sshd | wc -l ) -eq <span class="number">0</span></span><br><span class="line">        then</span><br><span class="line">        date +%Y-%m-%d<span class="string">&#x27; &#x27;</span>%T<span class="string">&#x27; &#x27;</span><span class="string">&quot;进程不存在&quot;</span> &gt;&gt; ~/.ssh_keep_log</span><br><span class="line">    sshd</span><br><span class="line">    date +%Y-%m-%d<span class="string">&#x27; &#x27;</span>%T<span class="string">&#x27; &#x27;</span><span class="string">&quot;进程启动成功&quot;</span> &gt;&gt; ~/.ssh_keep_log</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">    echo 进程存在 &gt;<span class="regexp">/dev/</span><span class="literal">null</span></span><br><span class="line">        fi</span><br><span class="line">      sleep <span class="number">2</span></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">    dos2unix</span><br><span class="line">    vi -b 去除空格字符</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sshd%E8%BF%9B%E7%A8%8B%E6%A3%80%E6%B5%8B%E4%BF%9D%E6%B4%BB"><span class="toc-number">1.</span> <span class="toc-text">sshd进程检测保活</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/1ac29390/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&text=sshd进程检测保活"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&is_video=false&description=sshd进程检测保活"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=sshd进程检测保活&body=Check out this article: https://www.cnblogs.com/nanstar/posts/1ac29390/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&title=sshd进程检测保活"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/1ac29390/&name=sshd进程检测保活&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/nanstar/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/nanstar/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/nanstar/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/nanstar/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

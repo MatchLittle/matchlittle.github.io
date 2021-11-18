@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="理解 bashrc 和 profile理解 bashrc 和 profile - { wido.me } 理解 bashrc 和 profilelinux bashrc profile develop mac SEP 30TH, 2011 UPDATED SEP 30TH, 2011 BY SUNTEYA 在一般的 linux 或者 unix 系统中, 都可以通过编辑 bashrc 和 profi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解 bashrc 和 profile">
+<meta property="og:url" content="https://www.cnblogs.com/nanstar/posts/eea50731/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="理解 bashrc 和 profile理解 bashrc 和 profile - { wido.me } 理解 bashrc 和 profilelinux bashrc profile develop mac SEP 30TH, 2011 UPDATED SEP 30TH, 2011 BY SUNTEYA 在一般的 linux 或者 unix 系统中, 都可以通过编辑 bashrc 和 profi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-17T06:59:27.385Z">
+<meta property="article:modified_time" content="2021-11-17T06:59:27.385Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/nanstar/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/nanstar/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/nanstar/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>理解 bashrc 和 profile</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/nanstar/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/nanstar/true" title="Mdb" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/nanstar/posts/81e7d018/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/nanstar/posts/575a2edf/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/eea50731/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/eea50731/&text=理解 bashrc 和 profile"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/eea50731/&is_video=false&description=理解 bashrc 和 profile"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=理解 bashrc 和 profile&body=Check out this article: https://www.cnblogs.com/nanstar/posts/eea50731/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/eea50731/&name=理解 bashrc 和 profile&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%86%E8%A7%A3-bashrc-%E5%92%8C-profile"><span class="toc-number">1.</span> <span class="toc-text">理解 bashrc 和 profile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%86%E8%A7%A3-bashrc-%E5%92%8C-profile-1"><span class="toc-number">2.</span> <span class="toc-text">理解 bashrc 和 profile</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-%E7%9A%84%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">Shell 的模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.1.1.</span> <span class="toc-text">Shell 的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#login-shell-%E5%92%8C-no-login-shell"><span class="toc-number">2.1.2.</span> <span class="toc-text">login shell 和 no-login shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#interactive-shell-%E5%92%8C-non-interactive-shell"><span class="toc-number">2.1.3.</span> <span class="toc-text">interactive shell 和 non-interactive shell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E6%A8%A1%E5%BC%8F%E7%BB%84%E5%90%88%E4%B8%AD-RC-%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="toc-number">2.2.</span> <span class="toc-text">在可能存在的模式组合中 RC 文件的执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH-login-sudo-su-USER-%E6%88%96%E8%80%85-mac-%E4%B8%8B%E5%BC%80%E5%90%AF%E7%BB%88%E7%AB%AF"><span class="toc-number">2.2.1.</span> <span class="toc-text">SSH login, sudo su - [USER] 或者 mac 下开启终端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E7%8A%B6%E6%80%81%E4%B8%8B%E8%BE%93%E5%85%A5-bash-%E6%88%96%E8%80%85-ubuntu-%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE%E4%B8%8B%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF"><span class="toc-number">2.2.2.</span> <span class="toc-text">在命令提示符状态下输入 bash 或者 ubuntu 默认设置下打开终端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-bash-c-%E2%80%9CCMD%E2%80%9D-%E6%88%96%E8%80%85-bash-BASHFILE-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84-shell"><span class="toc-number">2.2.3.</span> <span class="toc-text">通过 bash -c “CMD” 或者 bash BASHFILE 命令执行的 shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%89%B9%E6%AE%8A-%E9%80%9A%E8%BF%87-%E2%80%9Cssh-server-CMD%E2%80%9D-%E6%89%A7%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4-%E6%88%96-%E9%80%9A%E8%BF%87%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E8%BF%9C%E7%A8%8B%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">2.2.4.</span> <span class="toc-text">最特殊! 通过 “ssh server CMD” 执行的命令 或 通过程序执行远程的命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bashrc-%E5%92%8C-profile-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.3.</span> <span class="toc-text">bashrc 和 profile 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#profile"><span class="toc-number">2.3.1.</span> <span class="toc-text">profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bashrc"><span class="toc-number">2.3.2.</span> <span class="toc-text">bashrc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%9F%E6%9C%9B%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.4.</span> <span class="toc-text">期望的执行顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A-login-shell"><span class="toc-number">2.4.1.</span> <span class="toc-text">普通 login shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E7%A7%8D%E7%9B%B4%E6%8E%A5%E8%BF%90%E8%A1%8C-bash"><span class="toc-number">2.4.2.</span> <span class="toc-text">终端种直接运行 bash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bash-c-%E2%80%9CCMD%E2%80%9D"><span class="toc-number">2.4.3.</span> <span class="toc-text">bash -c “CMD”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-server-%E2%80%9CCMD%E2%80%9D"><span class="toc-number">2.4.4.</span> <span class="toc-text">ssh server “CMD”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E4%BF%AE%E6%94%B9"><span class="toc-number">2.5.</span> <span class="toc-text">最终修改</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Comments"><span class="toc-number">3.</span> <span class="toc-text">Comments</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        理解 bashrc 和 profile
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Mdb</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-11-17T06:59:27.385Z" itemprop="datePublished">2021-11-17</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="理解-bashrc-和-profile"><a href="#理解-bashrc-和-profile" class="headerlink" title="理解 bashrc 和 profile"></a>理解 bashrc 和 profile</h1><p><a target="_blank" rel="noopener" href="https://wido.me/sunteya/understand-bashrc-and-profile/">理解 bashrc 和 profile - { wido.me }</a></p>
+<h1 id="理解-bashrc-和-profile-1"><a href="#理解-bashrc-和-profile-1" class="headerlink" title="理解 bashrc 和 profile"></a>理解 bashrc 和 profile</h1><p>linux bashrc profile develop mac</p>
+<p>SEP 30TH, 2011 UPDATED SEP 30TH, 2011 BY SUNTEYA</p>
+<p>在一般的 linux 或者 unix 系统中, 都可以通过编辑 bashrc 和 profile 来设置用户的工作环境, 很多文章对于 profile 和 bashrc 也都有使用, 但究竟每个文件都有什么作用和该如何使用呢?</p>
+<p>首先我们来看系统中的这些文件, 一般的系统可能会有</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1<br />2<br />3<br />4<br />5</td>
+<td>/etc/profile<br />    /etc/bashrc<br />    <br />    ~/.bashrc<br />    ~/.profile</td>
+</tr>
+</tbody></table>
+<p>而如果系统是 ubuntu 或者 debian 的话, 就不会有 <code>/etc/bashrc</code> 而会有 <code>/etc/bash.bashrc</code> 文件.</p>
+<p>以上这些就是常用 profile 和 bashrc 文件了. 要理解这些文件之前还需要了解 Shell, Shell 的 login(登入) 和 interactive(交互式) 模式.</p>
+<h2 id="Shell-的模式"><a href="#Shell-的模式" class="headerlink" title="Shell 的模式"></a>Shell 的模式</h2><h3 id="Shell-的分类"><a href="#Shell-的分类" class="headerlink" title="Shell 的分类"></a>Shell 的分类</h3><p>系统的 shell 有很多种, 比如 bash, sh, zsh 之类的, 如果要查看某一个用户使用的是什么 shell 可以通过 <code>finger [USERNAME]</code> 命令来查看. <strong>我们这里只说 shell 是 bash 的情况</strong> , 因为如果是 sh 或者其他 shell 显然不会运行 bashrc 的.</p>
+<h3 id="login-shell-和-no-login-shell"><a href="#login-shell-和-no-login-shell" class="headerlink" title="login shell 和 no-login shell"></a>login shell 和 no-login shell</h3><p>“login shell” 代表用户登入, 比如使用 “su -“ 命令, 或者用 ssh 连接到某一个服务器上, 都会使用该用户默认 shell 启动 login shell 模式.</p>
+<p><strong>该模式下的 shell 会去自动执行 ** <strong>/etc/profile</strong> ** 和 ** <strong>~/.profile</strong> ** 文件, 但不会执行任何的 bashrc 文件, 所以一般再 /etc/profile 或者 ~/.profile 里我们会手动去 source bashrc 文件.</strong> </p>
+<p>而 no-login shell 的情况是我们在终端下直接输入 bash 或者 bash -c “CMD” 来启动的 shell.</p>
+<p><strong>该模式下是不会自动去运行任何的 profile 文件.</strong> </p>
+<h3 id="interactive-shell-和-non-interactive-shell"><a href="#interactive-shell-和-non-interactive-shell" class="headerlink" title="interactive shell 和 non-interactive shell"></a>interactive shell 和 non-interactive shell</h3><p>interactive shell 是交互式shell, 顾名思义就是用来和用户交互的, 提供了命令提示符可以输入命令.</p>
+<p><strong>该模式下会存在一个叫 ** <strong>PS1</strong> ** 的环境变量, 如果还不是 login shell 的则会去 source /etc/bash.bashrc 和 ~/.bashrc 文件</strong> </p>
+<p>non-interactive shell 则一般是通过 bash -c “CMD” 来执行的bash.</p>
+<p><strong>该模式下不会执行任何的 rc 文件, 不过还存在一种特殊情况这个我之后详细讲述</strong> </p>
+<h2 id="在可能存在的模式组合中-RC-文件的执行"><a href="#在可能存在的模式组合中-RC-文件的执行" class="headerlink" title="在可能存在的模式组合中 RC 文件的执行"></a>在可能存在的模式组合中 RC 文件的执行</h2><h3 id="SSH-login-sudo-su-USER-或者-mac-下开启终端"><a href="#SSH-login-sudo-su-USER-或者-mac-下开启终端" class="headerlink" title="SSH login, sudo su - [USER] 或者 mac 下开启终端"></a>SSH login, <code>sudo su - [USER]</code> 或者 mac 下开启终端</h3><p>ssh 登入和 <code>su -</code> 是典型的 interactive login shell, 所以会有 PS1 变量, 并且会执行</p>
+<p>&ensp;&ensp;&ensp;&ensp;/etc/profile</p>
+<p>&ensp;&ensp;&ensp;&ensp;~/.profile</p>
+<h3 id="在命令提示符状态下输入-bash-或者-ubuntu-默认设置下打开终端"><a href="#在命令提示符状态下输入-bash-或者-ubuntu-默认设置下打开终端" class="headerlink" title="在命令提示符状态下输入 bash 或者 ubuntu 默认设置下打开终端"></a>在命令提示符状态下输入 <code>bash</code> 或者 ubuntu 默认设置下打开终端</h3><p>这样开启的是 interactive no-login shell, 所以会有 PS1 变量, 只会执行</p>
+<p>&ensp;&ensp;&ensp;&ensp;/etc/bash.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;~/.bashrc</p>
+<h3 id="通过-bash-c-“CMD”-或者-bash-BASHFILE-命令执行的-shell"><a href="#通过-bash-c-“CMD”-或者-bash-BASHFILE-命令执行的-shell" class="headerlink" title="通过 bash -c “CMD” 或者 bash BASHFILE 命令执行的 shell"></a>通过 bash -c “CMD” 或者 bash BASHFILE 命令执行的 shell</h3><p>这些命令什么都不会执行, 也就是设置 PS1 变量, 不执行任何 RC 文件</p>
+<h3 id="最特殊-通过-“ssh-server-CMD”-执行的命令-或-通过程序执行远程的命令"><a href="#最特殊-通过-“ssh-server-CMD”-执行的命令-或-通过程序执行远程的命令" class="headerlink" title="最特殊! 通过 “ssh server CMD” 执行的命令 或 通过程序执行远程的命令"></a>最特殊! 通过 “ssh server CMD” 执行的命令 或 通过程序执行远程的命令</h3><p>这是最特殊的一种模式, 理论上应该既是 非交互 也是 非登入的, 但是实际上他不会设置 PS1, 但是还会执行</p>
+<p>&ensp;&ensp;&ensp;&ensp;/etc/bash.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;~/.bashrc</p>
+<p><strong>这里还有一点值得注意的是 /etc/bashrc 任何情况下都不会执行.</strong> </p>
+<h2 id="bashrc-和-profile-的区别"><a href="#bashrc-和-profile-的区别" class="headerlink" title="bashrc 和 profile 的区别"></a>bashrc 和 profile 的区别</h2><p>看了之前那么多种状态组合, 最关键的问题是, 究竟 bashrc 和 profile 有什么区别呢?</p>
+<h3 id="profile"><a href="#profile" class="headerlink" title="profile"></a>profile</h3><p>其实看名字就能了解大概了, profile 是某个用户唯一的用来设置环境变量的地方, 因为用户可以有多个 shell 比如 bash, sh, zsh 之类的, 但像环境变量这种其实只需要在统一的一个地方初始化就可以了, 而这就是 profile.</p>
+<h3 id="bashrc"><a href="#bashrc" class="headerlink" title="bashrc"></a>bashrc</h3><p>bashrc 也是看名字就知道, 是专门用来给 bash 做初始化的比如用来初始化 bash 的设置, bash 的代码补全, bash 的别名, bash 的颜色. 以此类推也就还会有 shrc, zshrc 这样的文件存在了, 只是 bash 太常用了而已.</p>
+<h2 id="期望的执行顺序"><a href="#期望的执行顺序" class="headerlink" title="期望的执行顺序"></a>期望的执行顺序</h2><p><code>=&gt;</code> 代表 在文件内部 source, 换行的 <code>=&gt;</code> 代表自身执行结束以后在 source, 同一行表示先 source 在执行自身</p>
+<h3 id="普通-login-shell"><a href="#普通-login-shell" class="headerlink" title="普通 login shell"></a>普通 login shell</h3><p>&ensp;&ensp;&ensp;&ensp;/etc/profile</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;=&gt; /etc/bash.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;~/.profile</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;=&gt; ~/.bashrc =&gt; /etc/bashrc</p>
+<h3 id="终端种直接运行-bash"><a href="#终端种直接运行-bash" class="headerlink" title="终端种直接运行 bash"></a>终端种直接运行 bash</h3><p>&ensp;&ensp;&ensp;&ensp;/etc/bash.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;~/.bashrc =&gt; /etc/bashrc</p>
+<h3 id="bash-c-“CMD”"><a href="#bash-c-“CMD”" class="headerlink" title="bash -c “CMD”"></a>bash -c “CMD”</h3><p>什么都不执行</p>
+<h3 id="ssh-server-“CMD”"><a href="#ssh-server-“CMD”" class="headerlink" title="ssh server “CMD”"></a>ssh server “CMD”</h3><p>&ensp;&ensp;&ensp;&ensp;/etc/bash.bashrc =&gt; /etc/profile</p>
+<p>&ensp;&ensp;&ensp;&ensp;~/.bashrc =&gt; | /etc/bashrc =&gt; /etc/profile</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;| ~/.profile</p>
+<p>这里会有点小混乱, 因为既有 /etc/bash.bashrc 又有 /etc/bashrc, 其实是这样的 ubuntu 和 debian 有 /etc/bash.bashrc 文件但是没有 /etc/bashrc, 其他的系统基本都是只有 /etc/bashrc 没有 /etc/bash.bashrc.</p>
+<h2 id="最终修改"><a href="#最终修改" class="headerlink" title="最终修改"></a>最终修改</h2><p>为了达到上述我们需要的执行流程, 那必须对系统的 rc 文件做修改. 我们拿 Ubuntu 举例</p>
+<p>首先 我们编辑 <code>/etc/profile</code> 在文件头部加入</p>
+<p>&ensp;&ensp;&ensp;&ensp;export system_profile_loaded=1</p>
+<p>这样其他文件就可以根据 $system_profile_loaded 来判断是否已经载入过 profile, 接着我们可以看到</p>
+<p>&ensp;&ensp;&ensp;&ensp;unset i</p>
+<p>&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;if [ “$PS1” ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ “$BASH” ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PS1=’\u@\h:\w$ ‘</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ -f /etc/bash.bashrc ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;. /etc/bash.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;else</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ “<code>id -u</code>“ -eq 0 ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PS1=’# ‘</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;else</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PS1=’$ ‘</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;umask 022</p>
+<p>按照我们刚才的方案, 应该是不管任何情况都应该在文件末尾去载入 bashrc, 所以我们修改成</p>
+<p>&ensp;&ensp;&ensp;&ensp;unset i</p>
+<p>&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;umask 022</p>
+<p>&ensp;&ensp;&ensp;&ensp;if [ “$BASH” ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ “$PS1” ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PS1=’\u@\h:\w$ ‘</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ -f /etc/bash.bashrc ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;. /etc/bash.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;else</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ “<code>id -u</code>“ -eq 0 ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PS1=’# ‘</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;else</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;PS1=’$ ‘</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>当然也可以有其他该法，只要符合在文件末尾载入 bashrc 就可以了.</p>
+<p>接着我们修改 <code>/etc/bash.bashrc</code>, 我们需要在文件头加入</p>
+<p>&ensp;&ensp;&ensp;&ensp;[ -n “${system_bashrc_running}” ] &amp;&amp; return</p>
+<p>&ensp;&ensp;&ensp;&ensp;system_bashrc_running=1</p>
+<p>&ensp;&ensp;&ensp;&ensp;[ -z “${system_profile_loaded}” ] &amp;&amp; source /etc/profile</p>
+<p>&ensp;&ensp;&ensp;&ensp;unset system_bashrc_running</p>
+<p>&ensp;&ensp;&ensp;&ensp;system_bashrc_runned=1</p>
+<p>其中 system_bashrc_running 这样的变量都是为了防止2次反复调用而加入的.</p>
+<p>这样系统级别的 rc 文件基本修改好了, 最好还可以再修改一下本地的rc文件, 所以我们编辑 “~/.profile”, 发现起内容是</p>
+<p>&ensp;&ensp;&ensp;&ensp;# ~/.profile: executed by Bourne-compatible login shells.</p>
+<p>&ensp;&ensp;&ensp;&ensp;if [ -n “$BASH” ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ -f ~/.bashrc ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;. ~/.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;mesg n</p>
+<p>而按照上述的修改规则只需要替换成</p>
+<p>&ensp;&ensp;&ensp;&ensp;export local_profile_loaded=1</p>
+<p>&ensp;&ensp;&ensp;&ensp;if [ -n “$BASH” ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;if [ -f ~/.bashrc ]; then</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;. ~/.bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>&ensp;&ensp;&ensp;&ensp;fi</p>
+<p>这样就始终再载入完 profile 以后去载入 bashrc 了, 接着我们像编辑 <code>/etc/bash.bashrc</code> 一样的去修改 <code>~/.bashrc</code>, 文件头上加入</p>
+<p>&ensp;&ensp;&ensp;&ensp;[ -n “${local_bashrc_running}” ] &amp;&amp; return</p>
+<p>&ensp;&ensp;&ensp;&ensp;local_bashrc_running=1</p>
+<p>&ensp;&ensp;&ensp;&ensp;[ -r /etc/bashrc -a -z “${system_bashrc_runned}” ] &amp;&amp; source /etc/bashrc</p>
+<p>&ensp;&ensp;&ensp;&ensp;[ -r ~/.profile -a -z “${local_profile_loaded}” ] &amp;&amp; source ~/.profile</p>
+<p>&ensp;&ensp;&ensp;&ensp;unset local_bashrc_running</p>
+<p>用来防止反复加载 profile, 并且这里需要特殊注明的是</p>
+<p>&ensp;&ensp;&ensp;&ensp;[ -r /etc/bashrc -a -z “${system_bashrc_runned}” ] &amp;&amp; source /etc/bashrc</p>
+<p><code>/etc/bashrc</code> 这个文件只有在 mac 之类的系统下才有, 所以 ubuntu 这里这行可以不加, 不过有判断是否存在所以加了也没关系.</p>
+<p>到这里基本上就可以比较完美的解决不通的 shell 加载顺序问题了, 当然比如这个用户用的是 zsh 之类的也需要按照类型的原理来修改.</p>
+<p>另外, 在用户目录下 可能会存在 <code>~/.bash_profile</code>, <code>~/.bash_login</code> 这样的文件, 但如果有这些文件 bash 就不会去载入 <code>~/.profile</code> 了, 所以如果存在的话需要删除 这些文件并把内容合并进 <code>~/.profile</code> 和 <code>~/.bashrc</code> 才行.</p>
+<p>最后还可以参考下 <a target="_blank" rel="noopener" href="https://github.com/sunteya/sot">https://github.com/sunteya/sot</a> 项目, 这个项目是我目前自己使用的的 dot 系列文件的配置. 里面的 bashrc 和 profile 都是按照上述流程修改的.</p>
+<h1 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h1><p>Copyright © 2021 - sunteya</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%86%E8%A7%A3-bashrc-%E5%92%8C-profile"><span class="toc-number">1.</span> <span class="toc-text">理解 bashrc 和 profile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%86%E8%A7%A3-bashrc-%E5%92%8C-profile-1"><span class="toc-number">2.</span> <span class="toc-text">理解 bashrc 和 profile</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-%E7%9A%84%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">Shell 的模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.1.1.</span> <span class="toc-text">Shell 的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#login-shell-%E5%92%8C-no-login-shell"><span class="toc-number">2.1.2.</span> <span class="toc-text">login shell 和 no-login shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#interactive-shell-%E5%92%8C-non-interactive-shell"><span class="toc-number">2.1.3.</span> <span class="toc-text">interactive shell 和 non-interactive shell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E6%A8%A1%E5%BC%8F%E7%BB%84%E5%90%88%E4%B8%AD-RC-%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="toc-number">2.2.</span> <span class="toc-text">在可能存在的模式组合中 RC 文件的执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH-login-sudo-su-USER-%E6%88%96%E8%80%85-mac-%E4%B8%8B%E5%BC%80%E5%90%AF%E7%BB%88%E7%AB%AF"><span class="toc-number">2.2.1.</span> <span class="toc-text">SSH login, sudo su - [USER] 或者 mac 下开启终端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E7%8A%B6%E6%80%81%E4%B8%8B%E8%BE%93%E5%85%A5-bash-%E6%88%96%E8%80%85-ubuntu-%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE%E4%B8%8B%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF"><span class="toc-number">2.2.2.</span> <span class="toc-text">在命令提示符状态下输入 bash 或者 ubuntu 默认设置下打开终端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-bash-c-%E2%80%9CCMD%E2%80%9D-%E6%88%96%E8%80%85-bash-BASHFILE-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84-shell"><span class="toc-number">2.2.3.</span> <span class="toc-text">通过 bash -c “CMD” 或者 bash BASHFILE 命令执行的 shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%89%B9%E6%AE%8A-%E9%80%9A%E8%BF%87-%E2%80%9Cssh-server-CMD%E2%80%9D-%E6%89%A7%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4-%E6%88%96-%E9%80%9A%E8%BF%87%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E8%BF%9C%E7%A8%8B%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">2.2.4.</span> <span class="toc-text">最特殊! 通过 “ssh server CMD” 执行的命令 或 通过程序执行远程的命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bashrc-%E5%92%8C-profile-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.3.</span> <span class="toc-text">bashrc 和 profile 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#profile"><span class="toc-number">2.3.1.</span> <span class="toc-text">profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bashrc"><span class="toc-number">2.3.2.</span> <span class="toc-text">bashrc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%9F%E6%9C%9B%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.4.</span> <span class="toc-text">期望的执行顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A-login-shell"><span class="toc-number">2.4.1.</span> <span class="toc-text">普通 login shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E7%A7%8D%E7%9B%B4%E6%8E%A5%E8%BF%90%E8%A1%8C-bash"><span class="toc-number">2.4.2.</span> <span class="toc-text">终端种直接运行 bash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bash-c-%E2%80%9CCMD%E2%80%9D"><span class="toc-number">2.4.3.</span> <span class="toc-text">bash -c “CMD”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-server-%E2%80%9CCMD%E2%80%9D"><span class="toc-number">2.4.4.</span> <span class="toc-text">ssh server “CMD”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E4%BF%AE%E6%94%B9"><span class="toc-number">2.5.</span> <span class="toc-text">最终修改</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Comments"><span class="toc-number">3.</span> <span class="toc-text">Comments</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/eea50731/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/eea50731/&text=理解 bashrc 和 profile"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/eea50731/&is_video=false&description=理解 bashrc 和 profile"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=理解 bashrc 和 profile&body=Check out this article: https://www.cnblogs.com/nanstar/posts/eea50731/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/eea50731/&title=理解 bashrc 和 profile"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/eea50731/&name=理解 bashrc 和 profile&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/nanstar/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/nanstar/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/nanstar/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/nanstar/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

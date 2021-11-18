@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Fvwm系统桌面环境配置美化桌面美化 以及程序包的下载 在Debian上用FVWM做自己的桌面_weixin_33966095的博客-CSDN博客 安装官方主题配置程序The Official FVWM Themes Home Page (sourceforge.net) 需要解压编译安装 .&#x2F;configure  make make install fvwm-themes-0.7.0.tar.b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fvwm系统桌面环境配置美化">
+<meta property="og:url" content="https://www.cnblogs.com/nanstar/posts/265ad7d7/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="Fvwm系统桌面环境配置美化桌面美化 以及程序包的下载 在Debian上用FVWM做自己的桌面_weixin_33966095的博客-CSDN博客 安装官方主题配置程序The Official FVWM Themes Home Page (sourceforge.net) 需要解压编译安装 .&#x2F;configure  make make install fvwm-themes-0.7.0.tar.b">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.cnblogs.com/nanstar/images/fvwm/fvwm_image.png">
+<meta property="og:image" content="https://www.cnblogs.com/nanstar/images/fvwm/fvwm_image_1.png">
+<meta property="og:image" content="https://www.cnblogs.com/nanstar/images/fvwm/fvwm_image_2.png">
+<meta property="og:image" content="https://www.cnblogs.com/nanstar/images/fvwm/fvwm_image_3.png">
+<meta property="og:image" content="https://www.cnblogs.com/nanstar/images/fvwm/fvwm_image_4.png">
+<meta property="article:published_time" content="2021-11-17T06:59:27.365Z">
+<meta property="article:modified_time" content="2021-11-17T06:59:27.365Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.cnblogs.com/nanstar/images/fvwm/fvwm_image.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/nanstar/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/nanstar/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/nanstar/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Fvwm系统桌面环境配置美化</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/nanstar/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/nanstar/true" title="Mdb" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/nanstar/posts/174a2819/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/nanstar/posts/aaedf958/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/265ad7d7/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&text=Fvwm系统桌面环境配置美化"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&is_video=false&description=Fvwm系统桌面环境配置美化"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Fvwm系统桌面环境配置美化&body=Check out this article: https://www.cnblogs.com/nanstar/posts/265ad7d7/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&name=Fvwm系统桌面环境配置美化&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fvwm%E7%B3%BB%E7%BB%9F%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%BE%8E%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">Fvwm系统桌面环境配置美化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AE%98%E6%96%B9%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">安装官方主题配置程序</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Fvwm系统桌面环境配置美化
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Mdb</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-11-17T06:59:27.365Z" itemprop="datePublished">2021-11-17</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Fvwm系统桌面环境配置美化"><a href="#Fvwm系统桌面环境配置美化" class="headerlink" title="Fvwm系统桌面环境配置美化"></a>Fvwm系统桌面环境配置美化</h1><p>桌面美化 以及程序包的下载</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33966095/article/details/94755775">在Debian上用FVWM做自己的桌面_weixin_33966095的博客-CSDN博客</a></p>
+<h4 id="安装官方主题配置程序"><a href="#安装官方主题配置程序" class="headerlink" title="安装官方主题配置程序"></a>安装官方主题配置程序</h4><p><a target="_blank" rel="noopener" href="http://fvwm-themes.sourceforge.net/">The Official FVWM Themes Home Page (sourceforge.net)</a></p>
+<p>需要解压编译安装</p>
+<p><em>./configure</em> </p>
+<p>make</p>
+<p>make install</p>
+<p><a href="/nanstar/file/fvwm-themes-0.7.0.tar.bz2">fvwm-themes-0.7.0.tar.bz2</a></p>
+<p><img src="/nanstar/images/fvwm/fvwm_image.png"></p>
+<p>然后下载 安装这个扩展文件</p>
+<p><em>fvwm-themes-config  –site  –install  fvwm-themes-extra-0.7.0.tar.bz2</em> </p>
+<p><a href="/nanstar/file/fvwm-themes-extra-0.7.0.tar.bz2">fvwm-themes-extra-0.7.0.tar.bz2</a></p>
+<p><img src="/nanstar/images/fvwm/fvwm_image_1.png"></p>
+<p><a target="_blank" rel="noopener" href="https://www.wolai.com/eMYBtbnWPediHKopE3xa4j">fvwm 配置文件</a></p>
+<p>然后你会在里面发现多了一些文件,里面应该有themes-rc,themes-rc-2文件,你将themes-rc改成.fvwm2rc文件</p>
+<p>官方配置详解</p>
+<p><a target="_blank" rel="noopener" href="https://www.fvwm.org/Wiki/Config/">https://www.fvwm.org/Wiki/Config/</a></p>
+<p>逐步配置文件详解</p>
+<p><a target="_blank" rel="noopener" href="https://zensites.net/fvwm/guide/intro.html">https://zensites.net/fvwm/guide/intro.html</a></p>
+<p>fvwm2 配置使用指南</p>
+<p><a target="_blank" rel="noopener" href="http://huihoo.com/">http://huihoo.com</a></p>
+<p>fvwm主题下载地址（这个不错 种类很多）</p>
+<p><a target="_blank" rel="noopener" href="http://box-look.org/">http://box-look.org</a></p>
+<p>官方配置文件地址</p>
+<p><a target="_blank" rel="noopener" href="https://www.fvwm.org/Archive/Screenshots/">Desktop Screenshots (fvwm.org)</a></p>
+<p><a target="_blank" rel="noopener" href="http://fvwm.org/">http://fvwm.org</a></p>
+<p><img src="/nanstar/images/fvwm/fvwm_image_2.png"></p>
+<p>主题网站</p>
+<p><a target="_blank" rel="noopener" href="http://fvwm-themes.sourceforge.net/">The Official FVWM Themes Home Page (sourceforge.net)</a></p>
+<p>2.x版本官方默认配置文件地址</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/fvwmorg/fvwm/blob/master/default-config/config#L25">fvwm/config at master · fvwmorg/fvwm · GitHub</a></p>
+<p><img src="/nanstar/images/fvwm/fvwm_image_3.png"></p>
+<p><img src="/nanstar/images/fvwm/fvwm_image_4.png"></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fvwm%E7%B3%BB%E7%BB%9F%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%BE%8E%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">Fvwm系统桌面环境配置美化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AE%98%E6%96%B9%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">安装官方主题配置程序</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/265ad7d7/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&text=Fvwm系统桌面环境配置美化"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&is_video=false&description=Fvwm系统桌面环境配置美化"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Fvwm系统桌面环境配置美化&body=Check out this article: https://www.cnblogs.com/nanstar/posts/265ad7d7/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&title=Fvwm系统桌面环境配置美化"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/265ad7d7/&name=Fvwm系统桌面环境配置美化&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/nanstar/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/nanstar/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/nanstar/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/nanstar/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
