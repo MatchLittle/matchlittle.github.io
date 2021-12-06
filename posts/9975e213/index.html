@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="BUG1892 部分制单人和详情里显示不一致 BUG #1892 供货商PC–收付款列表–部分制单人和详情里显示不一致 - 水泥云链 - 禅道  123456createUserNickName  列表制单人字段preparer            详情制单人字段问题：列表显示和详情显示不一样解决：列表未查询但返回了preparer字段，将preparer字段内容查询返回  是否解决：已解决 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="公司日常工作">
+<meta property="og:url" content="https://www.cnblogs.com/nanstar/posts/9975e213/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="BUG1892 部分制单人和详情里显示不一致 BUG #1892 供货商PC–收付款列表–部分制单人和详情里显示不一致 - 水泥云链 - 禅道  123456createUserNickName  列表制单人字段preparer            详情制单人字段问题：列表显示和详情显示不一样解决：列表未查询但返回了preparer字段，将preparer字段内容查询返回  是否解决：已解决 2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/wxn/Pictures/Pasted%20Screenshot%202021-11-23%2009-43-23.png">
+<meta property="article:published_time" content="2021-11-18T09:55:54.000Z">
+<meta property="article:modified_time" content="2021-12-06T05:31:56.470Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/wxn/Pictures/Pasted%20Screenshot%202021-11-23%2009-43-23.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/nanstar/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/nanstar/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/nanstar/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>公司日常工作</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/nanstar/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/nanstar/true" title="Mdb" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/nanstar/posts/da171957/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/9975e213/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/9975e213/&text=公司日常工作"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/9975e213/&is_video=false&description=公司日常工作"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=公司日常工作&body=Check out this article: https://www.cnblogs.com/nanstar/posts/9975e213/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/9975e213/&name=公司日常工作&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BUG"><span class="toc-number">1.</span> <span class="toc-text">BUG</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1892-%E9%83%A8%E5%88%86%E5%88%B6%E5%8D%95%E4%BA%BA%E5%92%8C%E8%AF%A6%E6%83%85%E9%87%8C%E6%98%BE%E7%A4%BA%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-number">1.1.</span> <span class="toc-text">1892 部分制单人和详情里显示不一致</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E8%A7%A3%E5%86%B3%EF%BC%9A%E5%B7%B2%E8%A7%A3%E5%86%B3-20211122"><span class="toc-number">1.1.1.</span> <span class="toc-text">是否解决：已解决 20211122</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1396-%E4%BB%A3%E5%8A%9E%E6%B6%88%E6%81%AF%E6%98%BE%E7%A4%BA%E4%B8%BA0"><span class="toc-number">1.2.</span> <span class="toc-text">1396 代办消息显示为0</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%9C%AA%E8%A7%A3%E5%86%B3"><span class="toc-number">1.2.1.</span> <span class="toc-text">是否解决：未解决</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%9B%E8%B4%A7%E5%95%86%E6%88%91%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%A1%A8%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.1.</span> <span class="toc-text">供货商我的价格表接口</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%A5%E4%BB%B7%E6%88%90%E5%8A%9F%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-number">3.1.</span> <span class="toc-text">报价成功发送消息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="toc-number">3.2.</span> <span class="toc-text">需要的字段</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%9B%E8%B4%A7%E5%95%86%E7%9A%84%E6%8A%A5%E4%BB%B7%E7%9A%84%E4%BA%A7%E5%93%81%E8%A1%A8%E9%87%8C%E8%83%BD%E6%8F%90%E4%BE%9B%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="toc-number">3.3.</span> <span class="toc-text">供货商的报价的产品表里能提供的字段</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#About"><span class="toc-number">4.</span> <span class="toc-text">About</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#resultMap"><span class="toc-number">4.1.</span> <span class="toc-text">resultMap</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Out"><span class="toc-number">5.</span> <span class="toc-text">Out</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        公司日常工作
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Mdb</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-11-18T09:55:54.000Z" itemprop="datePublished">2021-11-18</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="BUG"><a href="#BUG" class="headerlink" title="BUG"></a>BUG</h4><h5 id="1892-部分制单人和详情里显示不一致"><a href="#1892-部分制单人和详情里显示不一致" class="headerlink" title="1892 部分制单人和详情里显示不一致"></a>1892 部分制单人和详情里显示不一致</h5><blockquote>
+<p><a target="_blank" rel="noopener" href="http://192.168.0.254:9901/zentao/bug-view-1892.html">BUG #1892 供货商PC–收付款列表–部分制单人和详情里显示不一致 - 水泥云链 - 禅道</a></p>
+</blockquote>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">createUserNickName</span>  列表制单人字段</span><br><span class="line">preparer            详情制单人字段</span><br><span class="line"></span><br><span class="line">问题：列表显示和详情显示不一样</span><br><span class="line">解决：列表未查询但返回了preparer字段，将preparer字段内容查询返回</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="是否解决：已解决-20211122"><a href="#是否解决：已解决-20211122" class="headerlink" title="是否解决：已解决 20211122"></a>是否解决：已解决 20211122</h6><h5 id="1396-代办消息显示为0"><a href="#1396-代办消息显示为0" class="headerlink" title="1396 代办消息显示为0"></a>1396 代办消息显示为0</h5><blockquote>
+<p><a target="_blank" rel="noopener" href="http://192.168.0.254:9901/zentao/bug-view-1396.html###">BUG #1396 供货商端–消息提醒都显示0 - 水泥云链 - 禅道 和BUG1521相关 </a></p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题：供货商段的待办消息提醒显示的都为0</span><br><span class="line">原因：消息发送（指定的消息才有待办的这个状态）的时候，没有把待办的这个条件加上</span><br><span class="line">解决：把待办的条件加上就可以了</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>有待办的接口</th>
+<th>位置</th>
+<th>是否解决</th>
+<th>接口提醒详细的文件路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>客户下单成功</td>
+<td>供货商</td>
+<td>已解决</td>
+<td>order/service/impl/OrderPackServiceImpl.java</td>
+</tr>
+<tr>
+<td>2</td>
+<td>取消订单[申请取消]</td>
+<td>供货商</td>
+<td>接口还没</td>
+<td>/order/order/customerOrderInfo</td>
+</tr>
+<tr>
+<td>3</td>
+<td>上游订单修改价格</td>
+<td>供货商</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>客户订单同意议价</td>
+<td>供货商</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>客户订单拒绝议价</td>
+<td>供货商</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>客户有下单运输单</td>
+<td>运输公司</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>客户订单同意议价</td>
+<td>运输公司</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>客户订单拒绝议价</td>
+<td>运输公司</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>客户申请 取消订单供货商没有收到消息</p>
+</li>
+<li><p>客户申请取消订单 供货商同意之后 消息内容不是很准确</p>
+</li>
+</ul>
+<h6 id="是否解决：未解决"><a href="#是否解决：未解决" class="headerlink" title="是否解决：未解决"></a>是否解决：未解决</h6><h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><h5 id="供货商我的价格表接口"><a href="#供货商我的价格表接口" class="headerlink" title="供货商我的价格表接口"></a>供货商我的价格表接口</h5><blockquote>
+<p>/product/productOrgSalesmanPrice/selectSalesmanPriceByGroupId</p>
+</blockquote>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><h5 id="报价成功发送消息"><a href="#报价成功发送消息" class="headerlink" title="报价成功发送消息"></a>报价成功发送消息</h5><p>需要放到mp的Mapper</p>
+<p>4张</p>
+<p>price_response</p>
+<p>price_response_product</p>
+<p>org_to_org_sell_product</p>
+<p>org_to_org_sell_product_price</p>
+<p>供货商的报价信息 和报价的产品列表</p>
+<p>res</p>
+<p>resp</p>
+<p>机构价格信息变动产品和价格表（行情）</p>
+<p>otosp </p>
+<p>otospp</p>
+<p>根据res的信息查询出来报价单的详情和产品的信息列表</p>
+<p>然后，把报价单的信息和产品列表分别放到 产品和价格表里</p>
+<p>res + resp.pf_id 匹配</p>
+<p>otosp 是否有这个产品 有的话更新这个产品的信息和这个产品的价格信息  没有的话新增产品和价格的信息 匹配的标准是四个字段</p>
+<img src="C:\Users\wxn\Pictures\Pasted Screenshot 2021-11-23 09-43-23.png" style="zoom: 25%;" />
+
+
+
+<p>更新这两种状态 是自提和含运输</p>
+<h5 id="需要的字段"><a href="#需要的字段" class="headerlink" title="需要的字段"></a>需要的字段</h5><p>结算方式Id x</p>
+<p>结算方式的名称 x</p>
+<p>付款方式Id v</p>
+<p>付款方式名称 v</p>
+<p>发票Id v</p>
+<p>发票名称 v</p>
+<p>价格展示方式 v</p>
+<p>产品价 含税不含税</p>
+<p>运费 含税不含税</p>
+<p>落地价 含税不含税</p>
+<h5 id="供货商的报价的产品表里能提供的字段"><a href="#供货商的报价的产品表里能提供的字段" class="headerlink" title="供货商的报价的产品表里能提供的字段"></a>供货商的报价的产品表里能提供的字段</h5><p>付款方式（名称） 发票名称</p>
+<p>发票（含票不含票（一票制？））</p>
+<p>价格展示方式 </p>
+<ul>
+<li>付款方式设置为现金 v</li>
+<li>现在使用的是结算方式 所以结算方式的三种是需要加上的（没有的话在表中新增&lt;已新增&gt;） v</li>
+<li>发票 自提的话设置为 产品票 含运输的话 设置为一票制 v</li>
+<li>价格含税不含税  就是看报价的单的是含税还是不含税 v  </li>
+</ul>
+<h4 id="About"><a href="#About" class="headerlink" title="About"></a>About</h4><h5 id="resultMap"><a href="#resultMap" class="headerlink" title="resultMap"></a>resultMap</h5><blockquote>
+<p>sql结果集合</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;resultMap type=&quot;com.shuiniwang.project.product.domain.dto.OrgToOrgSellProductDTO&quot; id=&quot;listMarketProductInfoMap&quot;&gt;</span><br><span class="line">        &lt;result property=&quot;sellerOrgId&quot;    column=&quot;sellerOrgId&quot;    /&gt;</span><br><span class="line">        &lt;result property=&quot;sellerOrgType&quot;    column=&quot;sellerOrgType&quot;    /&gt;</span><br><span class="line">        &lt;result property=&quot;sellerUserId&quot; column=&quot;sellerUserId&quot;/&gt;</span><br><span class="line">        &lt;result property=&quot;buyerOrgType&quot;    column=&quot;buyerOrgType&quot;    /&gt;</span><br><span class="line">        &lt;result property=&quot;buyerOrgId&quot;    column=&quot;buyerOrgId&quot;    /&gt;</span><br><span class="line">        &lt;result property=&quot;buyerUserId&quot; column=&quot;buyerUserId&quot;/&gt;</span><br><span class="line">&lt;!--        &lt;result property=&quot;cooOrgName&quot; column=&quot;cooOrgName&quot;&gt;&lt;/result&gt;--&gt;</span><br><span class="line">        &lt;collection property=&quot;quotations&quot;</span><br><span class="line">                    column=&quot;&#123;buyerOrgIds=buyerOrgId,</span><br><span class="line">                             buyerUserIds=buyerUserId,</span><br><span class="line">                            sellerOrgIds=sellerOrgId,</span><br><span class="line">                            sellerUserIds=sellerUserId,</span><br><span class="line">                             siteIds=siteIds,</span><br><span class="line">                             pfIds=pfIds&#125;&quot; select=&quot;listMarketQuotationProductInfo&quot;/&gt;</span><br><span class="line">    &lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span><span class="number">1</span>lib.us/</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="Out"><a href="#Out" class="headerlink" title="Out"></a>Out</h4><p>awesome-console-services[41]该仓库收集各种供命令行使用的外部服务</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/chubin/awesome-console-services">https://github.com/chubin/awesome-console-services</a> </p>
+<p> 图片极致压缩</p>
+<p> <a target="_blank" rel="noopener" href="https://devtool.tech/tiny-image">https://devtool.tech/tiny-image</a> </p>
+<p>Sway[32]</p>
+<p>Sway: <em><a target="_blank" rel="noopener" href="https://swaywm.org/">https://swaywm.org/</a></em></p>
+<p>服务部署</p>
+<p><a target="_blank" rel="noopener" href="https://fleek.co/">https://fleek.co/</a> </p>
+<p>Waydroid[22]</p>
+<p>Waydroid: <em><a target="_blank" rel="noopener" href="https://waydro.id/">https://waydro.id/</a></em></p>
+<p>ADS-B 信号不能对境外提供[15]（中文）</p>
+<p> <em><a target="_blank" rel="noopener" href="https://www.guancha.cn/ZhangZhongZuo/2021_11_03_613334.shtml">https://www.guancha.cn/ZhangZhongZuo/2021_11_03_613334.shtml</a></em></p>
+<p>chrome的扩展插件 笔记</p>
+<p> context-note: <em><a target="_blank" rel="noopener" href="https://github.com/betterRunner/context-note">https://github.com/betterRunner/context-note</a></em></p>
+<p>APIAuto[31]</p>
+<p> APIAuto: <em><a target="_blank" rel="noopener" href="https://github.com/TommyLemon/APIAuto">https://github.com/TommyLemon/APIAuto</a></em></p>
+<p>Kill the Newsletter![36]</p>
+<p> Kill the Newsletter!: <em><a target="_blank" rel="noopener" href="https://github.com/leafac/kill-the-newsletter">https://github.com/leafac/kill-the-newsletter</a></em></p>
+<p>树莓派家用服务器搭建指南[43]</p>
+<p>树莓派家用服务器搭建指南: <em><a target="_blank" rel="noopener" href="https://github.com/zhaoolee/pi">https://github.com/zhaoolee/pi</a></em></p>
+<p>英特尔处理器博物馆[45]</p>
+<p> 英特尔处理器博物馆: <em><a target="_blank" rel="noopener" href="https://www.mynikko.com/CPU/">https://www.mynikko.com/CPU/</a></em></p>
+<p>去中心化图书馆[49]</p>
+<p>去中心化图书馆: <em><a target="_blank" rel="noopener" href="https://libgen.fun/dweb.html">https://libgen.fun/dweb.html</a></em></p>
+<p>如何提高二维码的可用性[17]（英文）</p>
+<p> 如何提高二维码的可用性: <em><a target="_blank" rel="noopener" href="https://huonw.github.io/blog/2021/10/nsw-covid-qr/">https://huonw.github.io/blog/2021/10/nsw-covid-qr/</a></em></p>
+<p>Cloudcraft[21]</p>
+<p> Cloudcraft: <em><a target="_blank" rel="noopener" href="https://www.cloudcraft.co/">https://www.cloudcraft.co/</a></em></p>
+<p>用汇编语言编写 Python 扩展[35]（英文）</p>
+<p>用汇编语言编写 Python 扩展: <em><a target="_blank" rel="noopener" href="https://tonybaloney.github.io/posts/extending-python-with-assembly.html">https://tonybaloney.github.io/posts/extending-python-with-assembly.html</a></em></p>
+<p>《计算机体系结构基础》教科书[36]</p>
+<p>《计算机体系结构基础》教科书: <em><a target="_blank" rel="noopener" href="https://foxsen.github.io/archbase/">https://foxsen.github.io/archbase/</a></em></p>
+<p>政府采购网[5]。</p>
+<p> 政府采购网: <em><a target="_blank" rel="noopener" href="http://www.ccgp.gov.cn/">http://www.ccgp.gov.cn/</a></em></p>
+<p>Hurl[30]</p>
+<p>Hurl: <em><a target="_blank" rel="noopener" href="https://hurl.dev/">https://hurl.dev/</a></em></p>
+<p>deskto.ps[42]</p>
+<p>deskto.ps: <em><a target="_blank" rel="noopener" href="https://deskto.ps/">https://deskto.ps/</a></em></p>
+<p>网址收藏 列表</p>
+<p>rss.xml</p>
+<p>oldmouse.com[46]</p>
+<p> oldmouse.com: <em><a target="_blank" rel="noopener" href="http://oldmouse.com/">http://oldmouse.com/</a></em></p>
+<p>学习 GNU Coreutils 命令行文本处理[47]</p>
+<p><em><a target="_blank" rel="noopener" href="https://learnbyexample.github.io/cli_text_processing_coreutils/preface.html">https://learnbyexample.github.io/cli_text_processing_coreutils/preface.html</a></em></p>
+<p>AIP 潜艇[52]</p>
+<p><em><a target="_blank" rel="noopener" href="https://nationalinterest.org/blog/reboot/air-independent-propulsion-could-create-silent-killer-submarines-192514">https://nationalinterest.org/blog/reboot/air-independent-propulsion-could-create-silent-killer-submarines-192514</a></em></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BUG"><span class="toc-number">1.</span> <span class="toc-text">BUG</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1892-%E9%83%A8%E5%88%86%E5%88%B6%E5%8D%95%E4%BA%BA%E5%92%8C%E8%AF%A6%E6%83%85%E9%87%8C%E6%98%BE%E7%A4%BA%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-number">1.1.</span> <span class="toc-text">1892 部分制单人和详情里显示不一致</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E8%A7%A3%E5%86%B3%EF%BC%9A%E5%B7%B2%E8%A7%A3%E5%86%B3-20211122"><span class="toc-number">1.1.1.</span> <span class="toc-text">是否解决：已解决 20211122</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1396-%E4%BB%A3%E5%8A%9E%E6%B6%88%E6%81%AF%E6%98%BE%E7%A4%BA%E4%B8%BA0"><span class="toc-number">1.2.</span> <span class="toc-text">1396 代办消息显示为0</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%9C%AA%E8%A7%A3%E5%86%B3"><span class="toc-number">1.2.1.</span> <span class="toc-text">是否解决：未解决</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%9B%E8%B4%A7%E5%95%86%E6%88%91%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%A1%A8%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.1.</span> <span class="toc-text">供货商我的价格表接口</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%A5%E4%BB%B7%E6%88%90%E5%8A%9F%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-number">3.1.</span> <span class="toc-text">报价成功发送消息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="toc-number">3.2.</span> <span class="toc-text">需要的字段</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%9B%E8%B4%A7%E5%95%86%E7%9A%84%E6%8A%A5%E4%BB%B7%E7%9A%84%E4%BA%A7%E5%93%81%E8%A1%A8%E9%87%8C%E8%83%BD%E6%8F%90%E4%BE%9B%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="toc-number">3.3.</span> <span class="toc-text">供货商的报价的产品表里能提供的字段</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#About"><span class="toc-number">4.</span> <span class="toc-text">About</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#resultMap"><span class="toc-number">4.1.</span> <span class="toc-text">resultMap</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Out"><span class="toc-number">5.</span> <span class="toc-text">Out</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cnblogs.com/nanstar/posts/9975e213/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cnblogs.com/nanstar/posts/9975e213/&text=公司日常工作"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cnblogs.com/nanstar/posts/9975e213/&is_video=false&description=公司日常工作"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=公司日常工作&body=Check out this article: https://www.cnblogs.com/nanstar/posts/9975e213/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cnblogs.com/nanstar/posts/9975e213/&title=公司日常工作"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cnblogs.com/nanstar/posts/9975e213/&name=公司日常工作&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/nanstar/">主页</a></li>
+         
+          <li><a href="/nanstar/about/">关于</a></li>
+         
+          <li><a href="/nanstar/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/nanstar/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/nanstar/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/nanstar/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/nanstar/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/nanstar/js/main.js"></script>
+
+
+<script src="/nanstar/js/canvas-nest.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
