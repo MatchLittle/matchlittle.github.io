@@ -1,0 +1,8 @@
+thunar: Failed to initialize Xfconf: Cannot spawn a message bus without a machine-id: Unable to load /data/data/com.termux/files/usr/var/data/data/com.termux/files/usr/lib/dbus/machine-id or /data/data/com.termux/files/usr/etc/machine-id: Failed to open file “/data/data/com.termux/files/usr/var/data/data/com.termux/files/usr/lib/dbus/machine-id”: No such file or directory
+
+
+(thunar:29848): thunar-WARNING **: 16:28:36.015: Name 'org.xfce.FileManager' lost on the message dbus.
+
+(thunar:29848): thunar-WARNING **: 16:28:36.016: Name 'org.freedesktop.FileManager1' lost on the message dbus.
+ThunarThumbnailer: failed to create proxy: Cannot spawn a message bus without a machine-id: Unable to load /data/data/com.termux/files/usr/var/data/data/com.termux/files/usr/lib/dbus/machine-id or /data/data/com.termux/files/usr/etc/machine-id: Failed to open file “/data/data/com.termux/files/usr/var/data/data/com.termux/files/usr/lib/dbus/machine-id”: No such file or directoryGdk-Message: 16:43:40.740: thunar: Fatal IO error 11 (Try again) on X server localhost:10.0.
+
