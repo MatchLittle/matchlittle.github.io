@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang=zh>
+
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
     <meta name="description" content="Linux常用压缩解压指令7Z1234567891011121314151617181920212223安装pkg install p7zip解压缩7z文件7za x phpMyAdmin-3.3.8.1-all-languages.7z -r -o.&#x2F;参数含义：x  代表解压缩文件，并且是按原始目录树解压（还有个参数 e 也是解压缩文件，但其会将所有文件都解压到根下，而不是自己原有的文件夹下）p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常用压缩解压指令">
@@ -46,7 +49,10 @@
     
       <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
     
-<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 <body>
     
@@ -142,7 +148,7 @@
 
 
 
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">压缩文件／文件夹</span><br><span class="line"></span><br><span class="line">7za a -t7z -r Mytest.7z /opt/phpMyAdmin-<span class="number">3.3</span><span class="number">.8</span><span class="number">.1</span>-all-languages</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">参数含义：</span><br><span class="line">a  代表添加文件／文件夹到压缩包</span><br><span class="line"></span><br><span class="line">-t 是指定压缩类型，这里定为7z，可不指定，因为7za默认压缩类型就是7z。</span><br><span class="line"></span><br><span class="line">-r 表示递归所有的子文件夹</span><br><span class="line"></span><br><span class="line">Mytest.7z 是压缩好后的压缩包名</span><br><span class="line"></span><br><span class="line">/opt/phpMyAdmin-<span class="number">3.3</span><span class="number">.8</span><span class="number">.1</span>-all-languages/</span><br><span class="line"></span><br><span class="line">是压缩目标。</span><br><span class="line"></span><br><span class="line">注意：7za不仅仅支持.7z压缩格式，还支持.tar.bz2等压缩类型的。如上所述，用-t指定即可。</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">压缩文件／文件夹</span><br><span class="line"></span><br><span class="line">7za a -t7z -r <span class="title class_">Mytest</span>.7z /opt/phpMyAdmin-<span class="number">3.3</span><span class="number">.8</span><span class="number">.1</span>-all-languages</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">参数含义：</span><br><span class="line">a  代表添加文件／文件夹到压缩包</span><br><span class="line"></span><br><span class="line">-t 是指定压缩类型，这里定为7z，可不指定，因为7za默认压缩类型就是7z。</span><br><span class="line"></span><br><span class="line">-r 表示递归所有的子文件夹</span><br><span class="line"></span><br><span class="line"><span class="title class_">Mytest</span>.7z 是压缩好后的压缩包名</span><br><span class="line"></span><br><span class="line">/opt/phpMyAdmin-<span class="number">3.3</span><span class="number">.8</span><span class="number">.1</span>-all-languages/</span><br><span class="line"></span><br><span class="line">是压缩目标。</span><br><span class="line"></span><br><span class="line">注意：7za不仅仅支持.7z压缩格式，还支持.<span class="property">tar</span>.<span class="property">bz2</span>等压缩类型的。如上所述，用-t指定即可。</span><br></pre></td></tr></table></figure>
 
 
 
@@ -150,14 +156,14 @@
 <h4 id="Bz2"><a href="#Bz2" class="headerlink" title="Bz2"></a>Bz2</h4><p><a target="_blank" rel="noopener" href="https://linux.cn/article-7964-1.html">技术|如何在 Linux 中压缩及解压缩 .bz2 文件</a></p>
 <p>bzip2 是一个非常有名的压缩工具，并且在大多数主流 Linux 发行版上都有，你可以在你的发行版上用合适的命令来安装它。</p>
 <p>压缩文件</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">你可以如下压缩一个文件，使用-z标志启用压缩：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ bzip2 filename</span><br><span class="line">或者</span><br><span class="line">$ bzip2 -z filename</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bzip2 -z backup.tar</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">你可以如下压缩一个文件，使用-z标志启用压缩：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ bzip2 filename</span><br><span class="line">或者</span><br><span class="line">$ bzip2 -z filename</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bzip2 -z backup.<span class="property">tar</span></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
 
 <p>重要：bzip2 默认会在压缩及解压缩文件时删除输入文件（原文件），要保留输入文件，使用<code>-k</code>或者<code>--keep</code>选项。</p>
 <p>此外，<code>-f</code>或者<code>--force</code>标志会强制让 bzip2 覆盖已有的输出文件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">------ 要保留输入文件  ------</span><br><span class="line">$ bzip2 -zk filename</span><br><span class="line">$ bzip2 -zk backup.tar</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">------ 要保留输入文件  ------</span><br><span class="line">$ bzip2 -zk filename</span><br><span class="line">$ bzip2 -zk backup.<span class="property">tar</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -165,12 +171,12 @@
 
 <p>解压文件</p>
 <p>要解压缩<code>.bz2</code>文件，确保使用<code>-d</code>或者<code>--decompress</code>选项：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bzip2 -d filename.bz2</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bzip2 -d filename.<span class="property">bz2</span></span><br></pre></td></tr></table></figure>
 
 
 
 <p>注意：这个文件必须是<code>.bz2</code>的扩展名，上面的命令才能使用。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bzip2 -vd Etcher-linux-x64.AppImage.bz2 </span><br><span class="line">$ bzip2 -vfd Etcher-linux-x64.AppImage.bz2 </span><br><span class="line">$ ls -l Etcher-linux-x64.AppImage </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bzip2 -vd <span class="title class_">Etcher</span>-linux-x64.<span class="property">AppImage</span>.<span class="property">bz2</span> </span><br><span class="line">$ bzip2 -vfd <span class="title class_">Etcher</span>-linux-x64.<span class="property">AppImage</span>.<span class="property">bz2</span> </span><br><span class="line">$ ls -l <span class="title class_">Etcher</span>-linux-x64.<span class="property">AppImage</span> </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
@@ -180,7 +186,7 @@
 <blockquote>
 <p>tar &lt;选项&gt; &lt;文件&gt;</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># tar &lt;选项&gt; &lt;文件&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--<span class="keyword">delete</span> : 从归档文件 (而非磁带) 中删除</span><br><span class="line"></span><br><span class="line">-r, --append : 将文件追加到归档文件中</span><br><span class="line"></span><br><span class="line">-t, --list : 列出归档文件中包含的内容</span><br><span class="line"></span><br><span class="line">--test-label : 测试归档文件卷标并退出</span><br><span class="line"></span><br><span class="line">-u, --update : 将已更新的文件追加到归档文件中</span><br><span class="line"></span><br><span class="line">-x, --extract, --get : 释放归档文件中文件及目录</span><br><span class="line"></span><br><span class="line">-C, --directory=DIR : 执行归档动作前变更工作目录到 DIR</span><br><span class="line"></span><br><span class="line">-f, --file=ARCHIVE : 指定 (将要创建或已存在的) 归档文件名</span><br><span class="line"></span><br><span class="line">-j, --bip2 : 对归档文件使用 bzip2 压缩</span><br><span class="line"></span><br><span class="line">-J, --xz : 对归档文件使用 xz 压缩</span><br><span class="line"></span><br><span class="line">-p, --preserve-permissions : 保留原文件的访问权限</span><br><span class="line"></span><br><span class="line">-v, --verbose : 显示命令整个执行过程</span><br><span class="line"></span><br><span class="line">-z, <span class="attr">gzip</span> : 对归档文件使用 gzip 压缩</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># tar &lt;选项&gt; &lt;文件&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--<span class="keyword">delete</span> : 从归档文件 (而非磁带) 中删除</span><br><span class="line"></span><br><span class="line">-r, --append : 将文件追加到归档文件中</span><br><span class="line"></span><br><span class="line">-t, --list : 列出归档文件中包含的内容</span><br><span class="line"></span><br><span class="line">--test-label : 测试归档文件卷标并退出</span><br><span class="line"></span><br><span class="line">-u, --update : 将已更新的文件追加到归档文件中</span><br><span class="line"></span><br><span class="line">-x, --extract, --get : 释放归档文件中文件及目录</span><br><span class="line"></span><br><span class="line">-C, --directory=<span class="variable constant_">DIR</span> : 执行归档动作前变更工作目录到 <span class="variable constant_">DIR</span></span><br><span class="line"></span><br><span class="line">-f, --file=<span class="variable constant_">ARCHIVE</span> : 指定 (将要创建或已存在的) 归档文件名</span><br><span class="line"></span><br><span class="line">-j, --bip2 : 对归档文件使用 bzip2 压缩</span><br><span class="line"></span><br><span class="line">-J, --xz : 对归档文件使用 xz 压缩</span><br><span class="line"></span><br><span class="line">-p, --preserve-permissions : 保留原文件的访问权限</span><br><span class="line"></span><br><span class="line">-v, --verbose : 显示命令整个执行过程</span><br><span class="line"></span><br><span class="line">-z, gzip : 对归档文件使用 gzip 压缩</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
@@ -513,6 +519,21 @@
   </div>
 
 
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.95; background-color: #111111; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+
 
 
 </footer>
@@ -558,3 +579,7 @@
 <!-- Disqus Comments -->
 
 
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+<script src="/hexo-search/search/js/bootstrap3-typeahead.min.js"></script>
+<script src="/hexo-search/search/js/cb-search.js"></script>

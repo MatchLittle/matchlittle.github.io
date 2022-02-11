@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang=zh>
+
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
     <meta name="description" content="Hexo文档 | Hexo 初始化安装12345678910111213141516# 安装hexonpm install hexo-cli -g#初始化hexohexo init blog# 进入根目录cd blog# 安装环境npm install#启动hexohexo server      切换主题配置Hexo博客主题之hexo-theme-matery的介绍 | 闪烁之狐 (blinkf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo安装配置">
@@ -48,7 +51,10 @@
     
       <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
     
-<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 <body>
     
@@ -157,7 +163,7 @@
 <li>  建议修改两个 <code>per_page</code> 的分页条数值为 <code>6</code> 的倍数，如：<code>12</code>、<code>18</code> 等，这样文章列表在各个屏幕下都能较好的显示。</li>
 <li>  如果你是中文用户，则建议修改 <code>language</code> 的值为 <code>zh-CN</code></li>
 </ul>
-<h4 id="主题地址"><a href="#主题地址" class="headerlink" title="主题地址"></a>主题地址</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">主题地址</span><br><span class="line"></span><br><span class="line"><span class="attr">https</span>:<span class="comment">//hexo.io/themes/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">https:<span class="comment">//blog.soymilk.fun/</span></span><br><span class="line"></span><br><span class="line">## Plugins: https:<span class="comment">//hexo.io/plugins/</span></span><br><span class="line"></span><br><span class="line">## Themes: https:<span class="comment">//hexo.io/themes/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="主题地址"><a href="#主题地址" class="headerlink" title="主题地址"></a>主题地址</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">主题地址</span><br><span class="line"></span><br><span class="line"><span class="attr">https</span>:<span class="comment">//hexo.io/themes/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">https</span>:<span class="comment">//blog.soymilk.fun/</span></span><br><span class="line"></span><br><span class="line">## <span class="title class_">Plugins</span>: <span class="attr">https</span>:<span class="comment">//hexo.io/plugins/</span></span><br><span class="line"></span><br><span class="line">## <span class="title class_">Themes</span>: <span class="attr">https</span>:<span class="comment">//hexo.io/themes/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
@@ -165,7 +171,7 @@
 <h4 id="书写文章"><a href="#书写文章" class="headerlink" title="书写文章"></a>书写文章</h4><blockquote>
 <p>支持markdown文件  /blog/source/_posts  将文章放到这里就可以了</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Hexo 默认以标题做为文件名称，但您可编辑 new_post_name 参数来改变默认的文件名称，举例来说，</span><br><span class="line">设为 :year-:month-:day-:title.md 可让您更方便的通过日期来管理文章。</span><br><span class="line"></span><br><span class="line">变量  描述</span><br><span class="line">:title  标题（小写，空格将会被替换为短杠）</span><br><span class="line">:year  建立的年份，比如， <span class="number">2015</span></span><br><span class="line">:month  建立的月份（有前导零），比如， <span class="number">04</span></span><br><span class="line">:i_month  建立的月份（无前导零），比如， <span class="number">4</span></span><br><span class="line">:day  建立的日期（有前导零），比如， <span class="number">07</span></span><br><span class="line">:i_day  建立的日期（无前导零），比如， <span class="number">7</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Hexo</span> 默认以标题做为文件名称，但您可编辑 new_post_name 参数来改变默认的文件名称，举例来说，</span><br><span class="line">设为 :year-:month-:day-:title.<span class="property">md</span> 可让您更方便的通过日期来管理文章。</span><br><span class="line"></span><br><span class="line">变量  描述</span><br><span class="line">:title  标题（小写，空格将会被替换为短杠）</span><br><span class="line">:year  建立的年份，比如， <span class="number">2015</span></span><br><span class="line">:month  建立的月份（有前导零），比如， <span class="number">04</span></span><br><span class="line">:i_month  建立的月份（无前导零），比如， <span class="number">4</span></span><br><span class="line">:day  建立的日期（有前导零），比如， <span class="number">07</span></span><br><span class="line">:i_day  建立的日期（无前导零），比如， <span class="number">7</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -454,6 +460,21 @@
   </div>
 
 
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.95; background-color: #111111; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+
 
 
 </footer>
@@ -499,3 +520,7 @@
 <!-- Disqus Comments -->
 
 
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+<script src="/hexo-search/search/js/bootstrap3-typeahead.min.js"></script>
+<script src="/hexo-search/search/js/cb-search.js"></script>

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang=zh>
+
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
     <meta name="description" content="天气接口相关国内城市代码 中国天气网全城市代码weather_cityId_iechenyb专栏-CSDN博客 1234567891011121314http:&#x2F;&#x2F;www.weather.com.cn&#x2F;data&#x2F;sk&#x2F;101190408.html实时天气请求接口curl -s http:&#x2F;&#x2F;www.weather.com.cn&#x2F;data&#x2F;sk&#x2F;101190408.html &gt; weather">
 <meta property="og:type" content="article">
 <meta property="og:title" content="天气接口相关">
@@ -46,7 +49,10 @@
     
       <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
     
-<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 <body>
     
@@ -140,7 +146,7 @@
   <div class="content" itemprop="articleBody">
     <h1 id="天气接口相关"><a href="#天气接口相关" class="headerlink" title="天气接口相关"></a>天气接口相关</h1><p>国内城市代码</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/iechenyb/article/details/78652461">中国天气网全城市代码weather_cityId_iechenyb专栏-CSDN博客</a></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//www.weather.com.cn/data/sk/101190408.html</span></span><br><span class="line"></span><br><span class="line">实时天气请求接口</span><br><span class="line"></span><br><span class="line">curl -s http:<span class="comment">//www.weather.com.cn/data/sk/101190408.html &gt; weather</span></span><br><span class="line"></span><br><span class="line">awk -F <span class="string">&#x27;,&#x27;</span> <span class="string">&#x27;&#123;print $1,$3,$4,$5,$6&#125;&#x27;</span> weather | awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;&#123;print  $3,$4,$5,$6,$7,$8&#125;&#x27;</span> | awk -F <span class="string">&#x27;&quot;&#x27;</span> <span class="string">&#x27;&#123;print $2,$6,$10,$14,$18&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">郑州 <span class="number">21.4</span> 西风 小于<span class="number">3</span>级 <span class="number">65</span>%</span><br><span class="line"></span><br><span class="line"> awk -F <span class="string">&#x27;,&#x27;</span> <span class="string">&#x27;&#123;print $1,$3,$4,$5,$6&#125;&#x27;</span> weather | awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;&#123;print  $3,$4,$5,$6,$7,$8&#125;&#x27;</span> | awk -F <span class="string">&#x27;&quot;&#x27;</span> <span class="string">&#x27;&#123;print $2,&quot;气温&quot;$6,$10,&quot;风力&quot;$14,&quot;空气湿度&quot;$18&#125;&#x27;</span></span><br><span class="line"> </span><br><span class="line"> 郑州 气温<span class="number">21.4</span> 西风 风力小于<span class="number">3</span>级 空气湿度<span class="number">65</span>%</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">http</span>:<span class="comment">//www.weather.com.cn/data/sk/101190408.html</span></span><br><span class="line"></span><br><span class="line">实时天气请求接口</span><br><span class="line"></span><br><span class="line">curl -s <span class="attr">http</span>:<span class="comment">//www.weather.com.cn/data/sk/101190408.html &gt; weather</span></span><br><span class="line"></span><br><span class="line">awk -F <span class="string">&#x27;,&#x27;</span> <span class="string">&#x27;&#123;print $1,$3,$4,$5,$6&#125;&#x27;</span> weather | awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;&#123;print  $3,$4,$5,$6,$7,$8&#125;&#x27;</span> | awk -F <span class="string">&#x27;&quot;&#x27;</span> <span class="string">&#x27;&#123;print $2,$6,$10,$14,$18&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">郑州 <span class="number">21.4</span> 西风 小于<span class="number">3</span>级 <span class="number">65</span>%</span><br><span class="line"></span><br><span class="line"> awk -F <span class="string">&#x27;,&#x27;</span> <span class="string">&#x27;&#123;print $1,$3,$4,$5,$6&#125;&#x27;</span> weather | awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;&#123;print  $3,$4,$5,$6,$7,$8&#125;&#x27;</span> | awk -F <span class="string">&#x27;&quot;&#x27;</span> <span class="string">&#x27;&#123;print $2,&quot;气温&quot;$6,$10,&quot;风力&quot;$14,&quot;空气湿度&quot;$18&#125;&#x27;</span></span><br><span class="line"> </span><br><span class="line"> 郑州 气温<span class="number">21.4</span> 西风 风力小于<span class="number">3</span>级 空气湿度<span class="number">65</span>%</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -225,6 +231,21 @@
   </div>
 
 
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.95; background-color: #111111; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+
 
 
 </footer>
@@ -270,3 +291,7 @@
 <!-- Disqus Comments -->
 
 
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+<script src="/hexo-search/search/js/bootstrap3-typeahead.min.js"></script>
+<script src="/hexo-search/search/js/cb-search.js"></script>

@@ -1,0 +1,72 @@
+<h1 id="Hexo-Search"><a href="#Hexo-Search" class="headerlink" title="Hexo-Search"></a>Hexo-Search</h1><h4 id="hexo-plugin-for-blog-search-中文使用指南"><a href="#hexo-plugin-for-blog-search-中文使用指南" class="headerlink" title="hexo  plugin for blog search 中文使用指南"></a>hexo  plugin for blog search <a href="https://github.com/androiddevelop/hexo-search">中文使用指南</a></h4><p><a href="https://www.npmjs.com/package/hexo-search-data-plugin"><img src="https://img.shields.io/npm/v/hexo-search-data-plugin.svg" alt="npm"></a></p>
+<p>If your blog is builded by jekyll, please visit <a href="https://github.com/androiddevelop/jekyll-search">Jekyll-Search</a></p>
+<h3 id="Screenshot"><a href="#Screenshot" class="headerlink" title="Screenshot"></a>Screenshot</h3><p><img src="hexo-search.jpg" alt="hexo-search.jpg"></p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a href="https://www.codeboy.me/">https://www.codeboy.me</a></p>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><ol>
+<li>Click the icon in the lower right corner to search</li>
+<li>Double-click the ctrl key to search or close</li>
+<li>On the search page, click the close button in the upper right corner to close</li>
+</ol>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><ol>
+<li><p>Install the search plugin:</p>
+<pre><code>npm install hexo-search-data-plugin --save
+</code></pre>
+<p>  Or add a dependency in <code>package.json</code>:</p>
+<pre><code>&quot;hexo-search-data-plugin&quot;:&quot;^1.1.1&quot;
+</code></pre>
+<p>   Then run <code>npm update</code></p>
+</li>
+<li><p>Place the search directory under the <code>source</code> folder of the hexo theme:</p>
+<pre><code> search
+ ├── cb-footer-add.html
+ ├── css
+ │   └── cb-search.css
+ ├── img
+ │   ├── cb-close.png
+ │   └── cb-search.png
+ └── js
+     ├── bootstrap3-typeahead.min.js
+     └── cb-search.js
+</code></pre>
+</li>
+</ol>
+<ol start="3">
+<li>Add the content of <code>cb-footer-add.html</code> to the end of<code> layout / _partial / after-footer.ejs</code> of the current theme. After the addition is complete, the <code>cb-footer-add.html</code> file can delete.</li>
+</ol>
+<blockquote>
+<p> If the theme does not have an <code>after-footer.ejs</code> file, it can also be added to<code> footer.ejs</code>.</p>
+</blockquote>
+<h3 id="Precautions"><a href="#Precautions" class="headerlink" title="Precautions"></a>Precautions</h3><ol>
+<li>The introduction of <code>bootstrap3-typeahead.min.js</code> must be after the introduction of<code> jquery.min.js</code>!</li>
+<li>There are 8 default associations. If you need more, please search for <strong>items: 8</strong> in <code>bootstrap3-typeahead.min.js</code> and replace <strong>8</strong> with the value you need.</li>
+<li>Please do not use carriage return and other symbols in the title of the article, carriage return and other symbols will cause json parse errors.</li>
+</ol>
+<h3 id="History"><a href="#History" class="headerlink" title="History"></a>History</h3><h4 id="v1-1-1"><a href="#v1-1-1" class="headerlink" title="v1.1.1"></a>v1.1.1</h4><ul>
+<li>Support for double quotes in titles.</li>
+</ul>
+<h4 id="v1-1-0"><a href="#v1-1-0" class="headerlink" title="v1.1.0"></a>v1.1.0</h4><ul>
+<li>Update npm information.</li>
+</ul>
+<h4 id="v1-0-1"><a href="#v1-0-1" class="headerlink" title="v1.0.1"></a>v1.0.1</h4><ul>
+<li>Add console output , if you can’t get something while searching，please check out the console. </li>
+</ul>
+<h4 id="v1-0-0"><a href="#v1-0-0" class="headerlink" title="v1.0.0"></a>v1.0.0</h4><ul>
+<li>Support article search in hexo blog.</li>
+</ul>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><pre><code>Copyright 2016 Yuedong.li
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+<blockquote>
+<p>Any question can send email to  <a href="mailto:&#x61;&#x70;&#x70;&#x40;&#x63;&#x6f;&#x64;&#101;&#98;&#x6f;&#121;&#x2e;&#109;&#101;">&#x61;&#x70;&#x70;&#x40;&#x63;&#x6f;&#x64;&#101;&#98;&#x6f;&#121;&#x2e;&#109;&#101;</a>.</p>
+</blockquote>

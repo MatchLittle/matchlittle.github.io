@@ -1,0 +1,72 @@
+<h1 id="Hexo-Search"><a href="#Hexo-Search" class="headerlink" title="Hexo-Search"></a>Hexo-Search</h1><h4 id="hexo博客搜索插件-English-manual"><a href="#hexo博客搜索插件-English-manual" class="headerlink" title="hexo博客搜索插件  English manual"></a>hexo博客搜索插件  <a href="./README_EN.md">English manual</a></h4><p><a href="https://www.npmjs.com/package/hexo-search-data-plugin"><img src="https://img.shields.io/npm/v/hexo-search-data-plugin.svg" alt="npm"></a> </p>
+<p>jekyll博客搜索插件请前往 <a href="https://github.com/androiddevelop/jekyll-search">Jekyll-Search</a></p>
+<h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p><img src="hexo-search.jpg" alt="hexo-search.jpg"></p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a href="https://www.codeboy.me/">https://www.codeboy.me</a></p>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><ol>
+<li>点击右下角图标进行搜索</li>
+<li>双击ctrl键进行搜索或关闭</li>
+<li>搜索页面中点击右上角关闭按钮进行关闭</li>
+</ol>
+<h3 id="加入步骤"><a href="#加入步骤" class="headerlink" title="加入步骤"></a>加入步骤</h3><ol>
+<li><p>安装搜索插件:</p>
+<pre><code>npm install hexo-search-data-plugin --save
+</code></pre>
+<p> 或者在 <code>package.json</code> 中添加一下依赖：</p>
+<pre><code>&quot;hexo-search-data-plugin&quot;:&quot;^1.1.1&quot;
+</code></pre>
+<p> 之后执行<code>npm update</code>即可</p>
+</li>
+<li><p>将search目录放至于hexo主题的<code>source</code>文件夹下，其中search目录结构如下:</p>
+<pre><code> search
+ ├── cb-footer-add.html
+ ├── css
+ │   └── cb-search.css
+ ├── img
+ │   ├── cb-close.png
+ │   └── cb-search.png
+ └── js
+     ├── bootstrap3-typeahead.min.js
+     └── cb-search.js
+</code></pre>
+</li>
+</ol>
+<ol start="3">
+<li>在当前主题的 <code>layout/_partial/after-footer.ejs</code> 中的末尾加入 <code>cb-footer-add.html</code> 中的内容即可, 添加完毕后, <code>cb-footer-add.html</code> 文件可以删除。</li>
+</ol>
+<blockquote>
+<p>如果主题不存在 <code>after-footer.ejs</code> 文件，也可以添加在 <code>footer.ejs</code> 中。</p>
+</blockquote>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li><code>bootstrap3-typeahead.min.js</code> 的引入必须在 <code>jquery.min.js</code> 引入之后!</li>
+<li>默认联想8个，如果需要更多的话，请检索 <code>bootstrap3-typeahead.min.js</code> 中的 <strong>items:8</strong> , 将 <strong>8</strong> 替换成自己需要的数值。</li>
+<li>文章标题请不要使用回车等符号，回车等符号会造成json解析错误。</li>
+</ol>
+<h3 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h3><h4 id="v1-1-1"><a href="#v1-1-1" class="headerlink" title="v1.1.1"></a>v1.1.1</h4><ul>
+<li>支持标题中含有双引号。</li>
+</ul>
+<h4 id="v1-1-0"><a href="#v1-1-0" class="headerlink" title="v1.1.0"></a>v1.1.0</h4><ul>
+<li>更新npm信息。</li>
+</ul>
+<h4 id="v1-0-1"><a href="#v1-0-1" class="headerlink" title="v1.0.1"></a>v1.0.1</h4><ul>
+<li>添加错误console输出。搜索没提示，看console。</li>
+</ul>
+<h4 id="v1-0-0"><a href="#v1-0-0" class="headerlink" title="v1.0.0"></a>v1.0.0</h4><ul>
+<li>支持hexo博客中进行文章搜索。</li>
+</ul>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><pre><code>Copyright 2016 Yuedong.li
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+<blockquote>
+<p>有任何问题,欢迎发送邮件到<a href="mailto:&#97;&#x70;&#x70;&#x40;&#99;&#x6f;&#x64;&#101;&#98;&#111;&#121;&#46;&#x6d;&#101;">&#97;&#x70;&#x70;&#x40;&#99;&#x6f;&#x64;&#101;&#98;&#111;&#121;&#46;&#x6d;&#101;</a>交流.</p>
+</blockquote>

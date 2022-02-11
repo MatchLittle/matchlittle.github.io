@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang=zh>
+
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
     <meta name="description" content="网络在线工具集合 🌐 网络工具 https:&#x2F;&#x2F;uutool.cn&#x2F;img-resize&#x2F; https:&#x2F;&#x2F;tool.lu&#x2F;timestamp&#x2F; 世界各地得电话 邮件格式地址 国家基本信息 国际数据管理全球资源手册 http:&#x2F;&#x2F;www.grcdi.nl&#x2F;gsb&#x2F;global%20sourcebook.html base64转图片 http:&#x2F;&#x2F;jisuapi.com 文件格式站点 http:&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络在线工具集合">
@@ -46,7 +49,10 @@
     
       <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
     
-<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
 
 <body>
     
@@ -244,6 +250,21 @@
   </div>
 
 
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.95; background-color: #111111; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+
 
 
 </footer>
@@ -289,3 +310,7 @@
 <!-- Disqus Comments -->
 
 
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+<script src="/hexo-search/search/js/bootstrap3-typeahead.min.js"></script>
+<script src="/hexo-search/search/js/cb-search.js"></script>
