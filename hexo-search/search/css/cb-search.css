@@ -1,6 +1,20 @@
 a {
     color: #337ab7;
     text-decoration: none;
+    opacity: 0.99;
+}
+
+
+#footer li  {
+display: block;
+border-right: 0px solid;
+margin-right: 0px;
+}
+
+#footer li a {
+
+margin: 0 0;
+
 }
 
 a:hover,
@@ -55,6 +69,10 @@ input:focus {
     background-color: #e5e5e5;
 }
 
+.dropdown-menu > li {
+    display: flex;
+}
+
 .dropdown-menu > li > a {
     display: block;
     padding: 3px 20px;
@@ -62,7 +80,6 @@ input:focus {
     font-weight: normal;
     line-height: 1.42857143;
     color: #333;
-    white-space: nowrap;
 }
 
 .dropdown-menu > li > a:hover,
@@ -77,14 +94,14 @@ input:focus {
 .dropdown-menu > .active > a:focus {
     color: #fff;
     text-decoration: none;
-    background-color: #337ab7;
+    background-color: #f47474;
     outline: 0;
 }
 
 .dropdown-menu > .disabled > a,
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
-    color: #777;
+    color: #f47474; 
 }
 
 .dropdown-menu > .disabled > a:hover,
@@ -105,10 +122,8 @@ input:focus {
         margin: 0 15%;
     }
 
-    .cb-search-tool ul {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .cb-search-tool ul {  
+        display: inline-block;
     }
 
     .cb-search-content {
@@ -148,11 +163,9 @@ input:focus {
     }
 
     .cb-search-tool ul {
-        width: 96%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        display: inline-block;
     }
+
 
     .cb-search-content {
         width: 96%;
