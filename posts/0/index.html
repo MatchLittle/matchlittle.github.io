@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <meta name="description" content="如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考） 接下来讲解下如何安装配置这个MarkDown编辑器 首先安装 markdown 编辑器  1npm install zx-markdown-edi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue实现MarkDown编辑器">
+<meta property="og:url" content="http://example.com/posts/0/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考） 接下来讲解下如何安装配置这个MarkDown编辑器 首先安装 markdown 编辑器  1npm install zx-markdown-edi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nanormal.oss-cn-hangzhou.aliyuncs.com/ForWork/1872311-20200916222448081-370617139.png">
+<meta property="og:image" content="https://nanormal.oss-cn-hangzhou.aliyuncs.com/ForWork/1872311-20200916223520467-1240695101.png">
+<meta property="article:published_time" content="2022-02-23T01:07:46.000Z">
+<meta property="article:modified_time" content="2022-02-23T01:13:38.014Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nanormal.oss-cn-hangzhou.aliyuncs.com/ForWork/1872311-20200916222448081-370617139.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Vue实现MarkDown编辑器</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
+    
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/posts/8f401372/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/0/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/0/&text=Vue实现MarkDown编辑器"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/0/&is_video=false&description=Vue实现MarkDown编辑器"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Vue实现MarkDown编辑器&body=Check out this article: http://example.com/posts/0/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/0/&name=Vue实现MarkDown编辑器&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E9%A2%98%EF%BC%8C%E6%88%91%E4%BB%AC%E5%9C%A8Vue%E9%87%8C%E5%AE%9E%E7%8E%B0MarkDown%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%8C%E7%9B%B8%E5%AF%B9%E4%BA%8E%E5%AF%8C%E6%96%87%E6%9C%AC%EF%BC%8CMarkDown%E6%9B%B4%E5%8A%A0%E7%9A%84%E6%96%B9%E4%BE%BF%E5%BF%AB%E6%8D%B7%EF%BC%8C%E6%89%80%E4%BB%A5%E5%B0%B1%E6%9C%89%E4%BA%86%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%AE%A9%E6%88%91%E4%BB%AC%E5%9C%A8vue%E9%87%8C%E9%9D%A2%E4%BD%BF%E7%94%A8MarkDown%E7%BC%96%E8%BE%91%E5%99%A8%E7%BC%96%E8%BE%91%E6%8E%92%E7%89%88%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%9A%E5%A5%BD%E4%B9%8B%E5%90%8E%E7%9A%84%E6%95%88%E6%9E%9C%E5%9B%BE%EF%BC%88MarkDown%E7%BC%96%E8%BE%91%E5%99%A8%E6%94%AF%E6%8C%81vue%E7%9A%84%E4%B8%8D%E5%B0%91%EF%BC%8C%E6%88%91%E8%BF%99%E9%87%8C%E4%BB%85%E4%BE%9B%E5%8F%82%E8%80%83%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E8%AE%B2%E8%A7%A3%E4%B8%8B%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%BF%99%E4%B8%AAMarkDown%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">接下来讲解下如何安装配置这个MarkDown编辑器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%96%B0%E5%BB%BA%E4%BD%8D%E7%BD%AE%E5%AD%98%E6%94%BEmarkdown-js%E8%84%9A%E6%9C%AC%EF%BC%8Cjs%E8%84%9A%E6%9C%AC%E5%92%8Cvue%E9%9C%80%E8%A6%81%E5%9C%A8%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95"><span class="toc-number">4.</span> <span class="toc-text">安装完成之后，新建位置存放markdown js脚本，js脚本和vue需要在同级目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E5%B1%9E%E4%BA%8EMarkDown%E7%9A%84%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86"><span class="toc-number">5.</span> <span class="toc-text">这里是属于MarkDown的编辑配置部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86%EF%BC%8C%E6%94%BE%E5%88%B0%E6%96%B0%E5%BB%BA%E7%9A%84vue%E9%A1%B5%E9%9D%A2%EF%BC%8C%E6%88%96%E8%80%85%E6%98%AF%E5%B5%8C%E5%85%A5%E5%85%B7%E4%BD%93%E7%9A%84%E9%A1%B5%E9%9D%A2%E4%BD%8D%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">页面代码部分，放到新建的vue页面，或者是嵌入具体的页面位置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%85%A5%E9%A1%B5%E9%9D%A2%EF%BC%8C%E8%BE%93%E5%85%A5MarkDown%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E6%9C%AC%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%8F%B3%E8%BE%B9%E7%9C%8B%E5%88%B0%E6%B8%B2%E6%9F%93%E5%90%8E%E7%9A%84%E6%A0%BC%E5%BC%8F%E6%96%87%E6%9C%AC"><span class="toc-number">7.</span> <span class="toc-text">然后运行进入页面，输入MarkDown格式的文本，就可以在右边看到渲染后的格式文本</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Vue实现MarkDown编辑器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Mdb</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-23T01:07:46.000Z" itemprop="datePublished">2022-02-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容"><a href="#如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容" class="headerlink" title="如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容"></a>如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容</h4><h4 id="做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考）"><a href="#做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考）" class="headerlink" title="做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考）"></a>做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考）</h4><p><img src="https://nanormal.oss-cn-hangzhou.aliyuncs.com/ForWork/1872311-20200916222448081-370617139.png"></p>
+<h4 id="接下来讲解下如何安装配置这个MarkDown编辑器"><a href="#接下来讲解下如何安装配置这个MarkDown编辑器" class="headerlink" title="接下来讲解下如何安装配置这个MarkDown编辑器"></a>接下来讲解下如何安装配置这个MarkDown编辑器</h4><blockquote>
+<p>首先安装 markdown 编辑器</p>
+</blockquote>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> zx-markdown-editor</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装完成之后，新建位置存放markdown-js脚本，js脚本和vue需要在同级目录"><a href="#安装完成之后，新建位置存放markdown-js脚本，js脚本和vue需要在同级目录" class="headerlink" title="安装完成之后，新建位置存放markdown js脚本，js脚本和vue需要在同级目录"></a>安装完成之后，新建位置存放markdown js脚本，js脚本和vue需要在同级目录</h4><blockquote>
+<p>这是楼主的目录结构，具体目录结构可以查看代码部分，或者自定义目录位置</p>
+</blockquote>
+<p><img src="https://nanormal.oss-cn-hangzhou.aliyuncs.com/ForWork/1872311-20200916223520467-1240695101.png"></p>
+<blockquote>
+<p>vabMarkdownEditor.JS 脚本内容</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">ZxMarkdownEditor</span> <span class="keyword">from</span> <span class="string">&quot;./markdown&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">ZxMarkdownEditor</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable language_">window</span> !== <span class="string">&quot;undefined&quot;</span> &amp;&amp; <span class="variable language_">window</span>.<span class="property">Vue</span>) &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">Vue</span>.<span class="title function_">component</span>(<span class="string">&quot;zx-markdown-editor&quot;</span>, <span class="title class_">ZxMarkdownEditor</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="这里是属于MarkDown的编辑配置部分"><a href="#这里是属于MarkDown的编辑配置部分" class="headerlink" title="这里是属于MarkDown的编辑配置部分"></a>这里是属于MarkDown的编辑配置部分</h4><blockquote>
+<p>markdown.vue的脚本部分</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">simple</span>-<span class="title">mde</span>&quot; :<span class="type">class=&quot;classes&quot;&gt;</span></span></span><br><span class="line">        &lt;textarea ref=<span class="string">&quot;mde&quot;</span>&gt;&lt;/textarea&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">import</span> <span class="string">&quot;font-awesome/css/font-awesome.min.css&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> SimpleMDE from <span class="string">&quot;simplemde&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> <span class="string">&quot;simplemde/dist/simplemde.min.css&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> marked from <span class="string">&quot;marked&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> <span class="string">&quot;github-markdown-css/github-markdown.css&quot;</span>;</span><br><span class="line">    export default &#123;</span><br><span class="line">        name: <span class="string">&quot;markdown&quot;</span>,</span><br><span class="line">        props: &#123;</span><br><span class="line">            value: &#123;</span><br><span class="line">                type: String,</span><br><span class="line">                default: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            border: &#123;</span><br><span class="line">                type: <span class="built_in">Boolean</span>,</span><br><span class="line">                default: <span class="literal">false</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            config: &#123;</span><br><span class="line">                type: Object,</span><br><span class="line">                default: () =&gt; (&#123;&#125;),</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">data</span>() &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                mde: <span class="literal">null</span>,</span><br><span class="line">                defaultConfig: &#123;&#125;,</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;,</span><br><span class="line">        computed: &#123;</span><br><span class="line">            classes() &#123;</span><br><span class="line">                <span class="keyword">return</span> [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="string">&quot;i-mde-no-border&quot;</span>: !<span class="keyword">this</span>.border,</span><br><span class="line">                    &#125;,</span><br><span class="line">                ];</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        mounted() &#123;</span><br><span class="line">            <span class="keyword">this</span>.<span class="keyword">init</span>();</span><br><span class="line">        &#125;,</span><br><span class="line">        beforeDestroy() &#123;</span><br><span class="line">            <span class="keyword">this</span>.mde = <span class="literal">null</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            <span class="keyword">init</span>() &#123;</span><br><span class="line">                <span class="keyword">const</span> config = Object.assign(&#123;&#125;, <span class="keyword">this</span>.defaultConfig, <span class="keyword">this</span>.config);</span><br><span class="line">                <span class="keyword">this</span>.mde = new SimpleMDE(&#123;</span><br><span class="line">                    ...config,</span><br><span class="line">                    initialValue: <span class="keyword">this</span>.value,</span><br><span class="line">                    element: <span class="keyword">this</span>.$refs.mde,</span><br><span class="line">                    autoDownloadFontAwesome: <span class="literal">false</span>,</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">this</span>.mde.codemirror.on(<span class="string">&quot;change&quot;</span>, () =&gt; &#123;</span><br><span class="line">                    <span class="keyword">this</span>.$emit(<span class="string">&quot;input&quot;</span>, <span class="keyword">this</span>.mde.value());</span><br><span class="line">                    <span class="keyword">this</span>.$emit(<span class="string">&quot;on-change&quot;</span>, <span class="keyword">this</span>.mde.value());</span><br><span class="line">                    <span class="keyword">const</span> mdHtml = marked(<span class="keyword">this</span>.mde.value() || <span class="string">&quot;&quot;</span>, &#123;</span><br><span class="line">                        renderer: new marked.Renderer(),</span><br><span class="line">                        gfm: <span class="literal">true</span>,</span><br><span class="line">                        tables: <span class="literal">true</span>,</span><br><span class="line">                        breaks: <span class="literal">false</span>,</span><br><span class="line">                        pedantic: <span class="literal">false</span>,</span><br><span class="line">                        sanitize: <span class="literal">false</span>,</span><br><span class="line">                        smartLists: <span class="literal">true</span>,</span><br><span class="line">                        smartypants: <span class="literal">false</span>,</span><br><span class="line">                    &#125;);</span><br><span class="line">                    <span class="keyword">this</span>.$emit(</span><br><span class="line">                        <span class="string">&quot;show-html&quot;</span>,</span><br><span class="line">                        <span class="string">&#x27;&lt;div class=&quot;markdown-body&quot; &gt;&#x27;</span> + mdHtml + <span class="string">&quot;&lt;/div&gt;&quot;</span></span><br><span class="line">                    );</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;,</span><br><span class="line">            add(<span class="keyword">val</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.mde) &#123;</span><br><span class="line">                    <span class="keyword">this</span>.mde.value(<span class="keyword">this</span>.value + <span class="keyword">val</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            replace(<span class="keyword">val</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.mde) &#123;</span><br><span class="line">                    <span class="keyword">this</span>.mde.value(<span class="keyword">val</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="页面代码部分，放到新建的vue页面，或者是嵌入具体的页面位置"><a href="#页面代码部分，放到新建的vue页面，或者是嵌入具体的页面位置" class="headerlink" title="页面代码部分，放到新建的vue页面，或者是嵌入具体的页面位置"></a>页面代码部分，放到新建的vue页面，或者是嵌入具体的页面位置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;markdown-editor-container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">:gutter</span>=<span class="string">&quot;20&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:xs</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:sm</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:md</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:lg</span>=<span class="string">&quot;12&quot;</span> <span class="attr">:xl</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">vab-markdown-editor</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">ref</span>=<span class="string">&quot;mde&quot;</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">v-model</span>=<span class="string">&quot;value&quot;</span></span></span><br><span class="line"><span class="tag">                        @<span class="attr">show-html</span>=<span class="string">&quot;handleShowHtml&quot;</span></span></span><br><span class="line"><span class="tag">                &gt;</span><span class="tag">&lt;/<span class="name">vab-markdown-editor</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:xs</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:sm</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:md</span>=<span class="string">&quot;24&quot;</span> <span class="attr">:lg</span>=<span class="string">&quot;12&quot;</span> <span class="attr">:xl</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-card</span> <span class="attr">shadow</span>=<span class="string">&quot;hover&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">slot</span>=<span class="string">&quot;header&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">span</span>&gt;</span>实时预览部分<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-html</span>=<span class="string">&quot;html&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">//这里引入我们的js文件，路径可以自定义</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">import</span> <span class="title class_">VabMarkdownEditor</span> <span class="keyword">from</span> <span class="string">&quot;../../components/markdown/vabMarkdownEditor&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">name</span>: <span class="string">&quot;markDown&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">components</span>: &#123; <span class="title class_">VabMarkdownEditor</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">//上班是用来编辑的内容，下边是实时预览的信息值</span></span></span><br><span class="line"><span class="language-javascript">                <span class="attr">value</span>: <span class="string">&quot;# vue-admin-beautiful&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">html</span>: <span class="string">&#x27;&lt;h1 id=&quot;vue-admin-beautiful&quot;&gt;vue-admin-beautiful&lt;/h1&gt;&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//用来把编写的文本内容实时转换到右侧的显示区域</span></span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">handleShowHtml</span>(<span class="params">html</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">html</span> = html;</span></span><br><span class="line"><span class="language-javascript">            &#125;,</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">    &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="然后运行进入页面，输入MarkDown格式的文本，就可以在右边看到渲染后的格式文本"><a href="#然后运行进入页面，输入MarkDown格式的文本，就可以在右边看到渲染后的格式文本" class="headerlink" title="然后运行进入页面，输入MarkDown格式的文本，就可以在右边看到渲染后的格式文本"></a>然后运行进入页面，输入MarkDown格式的文本，就可以在右边看到渲染后的格式文本</h4>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E9%A2%98%EF%BC%8C%E6%88%91%E4%BB%AC%E5%9C%A8Vue%E9%87%8C%E5%AE%9E%E7%8E%B0MarkDown%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%8C%E7%9B%B8%E5%AF%B9%E4%BA%8E%E5%AF%8C%E6%96%87%E6%9C%AC%EF%BC%8CMarkDown%E6%9B%B4%E5%8A%A0%E7%9A%84%E6%96%B9%E4%BE%BF%E5%BF%AB%E6%8D%B7%EF%BC%8C%E6%89%80%E4%BB%A5%E5%B0%B1%E6%9C%89%E4%BA%86%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%AE%A9%E6%88%91%E4%BB%AC%E5%9C%A8vue%E9%87%8C%E9%9D%A2%E4%BD%BF%E7%94%A8MarkDown%E7%BC%96%E8%BE%91%E5%99%A8%E7%BC%96%E8%BE%91%E6%8E%92%E7%89%88%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">如题，我们在Vue里实现MarkDown编辑器，相对于富文本，MarkDown更加的方便快捷，所以就有了这篇文章，可以让我们在vue里面使用MarkDown编辑器编辑排版文本内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%9A%E5%A5%BD%E4%B9%8B%E5%90%8E%E7%9A%84%E6%95%88%E6%9E%9C%E5%9B%BE%EF%BC%88MarkDown%E7%BC%96%E8%BE%91%E5%99%A8%E6%94%AF%E6%8C%81vue%E7%9A%84%E4%B8%8D%E5%B0%91%EF%BC%8C%E6%88%91%E8%BF%99%E9%87%8C%E4%BB%85%E4%BE%9B%E5%8F%82%E8%80%83%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">做好之后的效果图（MarkDown编辑器支持vue的不少，我这里仅供参考）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E8%AE%B2%E8%A7%A3%E4%B8%8B%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%BF%99%E4%B8%AAMarkDown%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">接下来讲解下如何安装配置这个MarkDown编辑器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%96%B0%E5%BB%BA%E4%BD%8D%E7%BD%AE%E5%AD%98%E6%94%BEmarkdown-js%E8%84%9A%E6%9C%AC%EF%BC%8Cjs%E8%84%9A%E6%9C%AC%E5%92%8Cvue%E9%9C%80%E8%A6%81%E5%9C%A8%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95"><span class="toc-number">4.</span> <span class="toc-text">安装完成之后，新建位置存放markdown js脚本，js脚本和vue需要在同级目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E5%B1%9E%E4%BA%8EMarkDown%E7%9A%84%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86"><span class="toc-number">5.</span> <span class="toc-text">这里是属于MarkDown的编辑配置部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86%EF%BC%8C%E6%94%BE%E5%88%B0%E6%96%B0%E5%BB%BA%E7%9A%84vue%E9%A1%B5%E9%9D%A2%EF%BC%8C%E6%88%96%E8%80%85%E6%98%AF%E5%B5%8C%E5%85%A5%E5%85%B7%E4%BD%93%E7%9A%84%E9%A1%B5%E9%9D%A2%E4%BD%8D%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">页面代码部分，放到新建的vue页面，或者是嵌入具体的页面位置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%85%A5%E9%A1%B5%E9%9D%A2%EF%BC%8C%E8%BE%93%E5%85%A5MarkDown%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E6%9C%AC%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%8F%B3%E8%BE%B9%E7%9C%8B%E5%88%B0%E6%B8%B2%E6%9F%93%E5%90%8E%E7%9A%84%E6%A0%BC%E5%BC%8F%E6%96%87%E6%9C%AC"><span class="toc-number">7.</span> <span class="toc-text">然后运行进入页面，输入MarkDown格式的文本，就可以在右边看到渲染后的格式文本</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/0/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/0/&text=Vue实现MarkDown编辑器"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/0/&is_video=false&description=Vue实现MarkDown编辑器"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Vue实现MarkDown编辑器&body=Check out this article: http://example.com/posts/0/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/0/&title=Vue实现MarkDown编辑器"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/0/&name=Vue实现MarkDown编辑器&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+
+ <div class="footer-left">
+    Copyright &copy; 2022 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li style="display:inline-block;"><a href="/">主页</a></li>
+         
+          <li style="display:inline-block;"><a href="/about/">关于</a></li>
+         
+          <li style="display:inline-block;"><a href="/archives/">文章</a></li>
+         
+          <li style="display:inline-block;"><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li style="display:inline-block;"><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+
+
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.79; background-color: #b8b8b8; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+
+
+
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+<script src="/js/canvas-nest.js"></script>
+
+
+<script src="/lib/jquery/bootstrap3-typeahead.min.js"></script>
+
+
+<script src="/lib/jquery/cb-search.js"></script>
+
+
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+
+
