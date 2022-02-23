@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <meta name="description" content="Java实现短信验证码–设置发送间隔时间，以及有效时间（Java+Redis）这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口 关于Java项目怎么连接redis，请看这一篇文章 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;nanstar&#x2F;p&#x2F;13367747.html  代码部分1234567891011121">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java实现短信验证码--设置发送间隔时间及有效时间">
+<meta property="og:url" content="http://example.com/posts/32ffd99a/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="Java实现短信验证码–设置发送间隔时间，以及有效时间（Java+Redis）这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口 关于Java项目怎么连接redis，请看这一篇文章 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;nanstar&#x2F;p&#x2F;13367747.html  代码部分1234567891011121">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/pasted-21.png">
+<meta property="article:published_time" content="2022-02-23T02:25:11.000Z">
+<meta property="article:modified_time" content="2022-02-23T05:35:12.729Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/pasted-21.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Java实现短信验证码--设置发送间隔时间及有效时间</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
+    
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/655a9a5a/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/da00f52a/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/32ffd99a/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/32ffd99a/&text=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/32ffd99a/&is_video=false&description=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java实现短信验证码--设置发送间隔时间及有效时间&body=Check out this article: http://example.com/posts/32ffd99a/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/32ffd99a/&name=Java实现短信验证码--设置发送间隔时间及有效时间&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java%E5%AE%9E%E7%8E%B0%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E2%80%93%E8%AE%BE%E7%BD%AE%E5%8F%91%E9%80%81%E9%97%B4%E9%9A%94%E6%97%B6%E9%97%B4%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%9C%89%E6%95%88%E6%97%B6%E9%97%B4%EF%BC%88Java-Redis%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Java实现短信验证码–设置发送间隔时间，以及有效时间（Java+Redis）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%86Java%E5%8F%91%E9%80%81%E6%89%8B%E6%9C%BA%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8F%91%E9%80%81%E7%9A%84%E9%97%B4%E9%9A%94%E6%97%B6%E9%97%B4%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E6%97%B6%E9%97%B4%E5%92%8C%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%90%88%E6%B3%95%E6%80%A7%E9%AA%8C%E8%AF%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%98%B2%E6%AD%A2%E6%81%B6%E6%84%8F%E5%88%B7%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text">这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number"></span> <span class="toc-text">代码部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E5%88%B0%E7%9A%84%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">用到的工具类的部分</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java实现短信验证码--设置发送间隔时间及有效时间
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MoDianBai</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-23T02:25:11.000Z" itemprop="datePublished">2022-02-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="Java实现短信验证码–设置发送间隔时间，以及有效时间（Java-Redis）"><a href="#Java实现短信验证码–设置发送间隔时间，以及有效时间（Java-Redis）" class="headerlink" title="Java实现短信验证码–设置发送间隔时间，以及有效时间（Java+Redis）"></a>Java实现短信验证码–设置发送间隔时间，以及有效时间（Java+Redis）</h4><h4 id="这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口"><a href="#这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口" class="headerlink" title="这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口"></a>这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口</h4><blockquote>
+<p>关于Java项目怎么连接redis，请看这一篇文章 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/nanstar/p/13367747.html">https://www.cnblogs.com/nanstar/p/13367747.html</a></p>
+</blockquote>
+<h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zxjs.controller.app;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.swagger.annotations.Api;</span><br><span class="line"><span class="keyword">import</span> io.swagger.annotations.ApiImplicitParam;</span><br><span class="line"><span class="keyword">import</span> io.swagger.annotations.ApiOperation;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang.RandomStringUtils;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 发送短信验证码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Api(value=&quot;发送短信验证码&quot;,description = &quot;发送短信验证码，默认发送短信的间隔是一分钟&quot;,tags = &#123;&quot;发送短信验证码&quot;&#125;)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;appISendSms&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SendSMS</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(SendSMS.class);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 链接redis数据库，使用验证码的时候，只需要在其他的地方用redis查询这个手机号的验证码就可以了</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">static</span> <span class="type">Jedis</span> <span class="variable">jedis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Jedis</span>(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 生成随机的六位验证码</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">static</span> <span class="type">String</span> <span class="variable">sale</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException&#123;</span><br><span class="line">        <span class="comment">//手机号测试部分</span></span><br><span class="line">        sendSmsInfo(<span class="string">&quot;13683654784&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送验证消息</span></span><br><span class="line"><span class="comment">     * 传入手机号，接收到的是用户的手机号码</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ApiOperation(value=&quot;发送验证消息&quot;,notes = &quot;发送验证消息，默认同一个手机号码发送短信间隔是一分钟,加入手机号码格式验证，可使用时长是五分钟，可以有效防止恶意刷接口&quot;)</span></span><br><span class="line">    <span class="meta">@ApiImplicitParam(paramType = &quot;query&quot;,name=&quot;phone&quot;,value = &quot;0&quot;,required = true)</span></span><br><span class="line">	<span class="meta">@GetMapping(&quot;getReCode&quot;)</span></span><br><span class="line">	<span class="meta">@ResponseBody</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span>  String <span class="title function_">sendSmsInfo</span><span class="params">(String phone)</span>&#123;</span><br><span class="line">        <span class="comment">//进入发送逻辑的时候生成随机验证码，六位数字</span></span><br><span class="line">          sale = RandomStringUtils.randomNumeric(<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//思路，每个手机号进来的时候，放到redis里面一个值，（手机号，验证码+开始时间）</span></span><br><span class="line">		<span class="comment">// 当这个用户再次来查询的时候，查看时间是否到达一分钟，到达的话可以发送验证码</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">//验证码有效时间，放到redis缓存里面（手机号，验证码+开始时间），根据开始时间来判断，达到了时间删掉缓存里面的手机号</span></span><br><span class="line">			<span class="type">String</span> <span class="variable">regex</span> <span class="operator">=</span> <span class="string">&quot;^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9])|(16[6]))\\d&#123;8&#125;$&quot;</span>;</span><br><span class="line">			<span class="type">Pattern</span> <span class="variable">p</span> <span class="operator">=</span> Pattern.compile(regex);</span><br><span class="line">			<span class="type">Matcher</span> <span class="variable">m</span> <span class="operator">=</span> p.matcher(phone);</span><br><span class="line">			<span class="type">boolean</span> <span class="variable">isMatch</span> <span class="operator">=</span> m.matches();</span><br><span class="line">			<span class="keyword">if</span> (! isMatch) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;手机号码格式不正确,请核对后重新输入!&quot;</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">/*检测redis是否开启，未开启的话，返回信息*/</span></span><br><span class="line">				<span class="keyword">if</span>(jedis.ping() == <span class="string">&quot;PONG&quot;</span>)&#123;</span><br><span class="line">					<span class="keyword">return</span>  <span class="string">&quot;Redis Is Not Run!&quot;</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//当前时间秒数</span></span><br><span class="line">				<span class="type">Long</span> <span class="variable">timemili</span> <span class="operator">=</span> System.currentTimeMillis() / <span class="number">1000</span>;</span><br><span class="line"><span class="comment">//				System.out.println(&quot;当前的秒数&quot; + timemili);</span></span><br><span class="line"><span class="comment">//				System.out.println(jedis.dbSize());</span></span><br><span class="line"><span class="comment">//				System.out.println(jedis.keys(&quot;*&quot;));</span></span><br><span class="line">				<span class="comment">/*在这里写一个定时的for循环，用来取redis的手机号码信息，然后查询手机号码开始的时间，若是大于等于五分钟</span></span><br><span class="line"><span class="comment">				* 就给删除这个键值*/</span></span><br><span class="line"> 				<span class="comment">//创建多线程定时任务，延迟1s启动，每隔1s执行一次，是前一个任务开始时就开始计算时间间隔，但是会等上一个任务结束在开始下一个</span></span><br><span class="line">				<span class="type">ScheduledExecutorService</span> <span class="variable">scheduledExecutorService</span> <span class="operator">=</span> Executors.newScheduledThreadPool(<span class="number">10</span>);</span><br><span class="line">				scheduledExecutorService.scheduleAtFixedRate(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">					<span class="meta">@Override</span></span><br><span class="line">					<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">						<span class="comment">/*执行程序的位置*/</span></span><br><span class="line">						<span class="comment">//首先取出所有的手机号 键信息，放到新的集合里</span></span><br><span class="line">						<span class="type">Set</span> <span class="variable">setPhone</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashSet</span>();</span><br><span class="line">						setPhone = jedis.keys(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">						<span class="keyword">for</span> (Object setInfo : setPhone) &#123;</span><br><span class="line">							<span class="comment">//判断这个键的值是不是超过五分钟，是的话就删除掉这个键</span></span><br><span class="line">							System.out.println(<span class="string">&quot;计算结果&quot;</span>+ (System.currentTimeMillis() / <span class="number">1000</span> -  Long.parseLong(jedis.get(setInfo.toString()).substring(<span class="number">6</span>))) );</span><br><span class="line">							<span class="keyword">if</span>(System.currentTimeMillis() / <span class="number">1000</span> -  Long.parseLong(jedis.get(setInfo.toString()).substring(<span class="number">6</span>)) &gt; <span class="number">300</span>)&#123;</span><br><span class="line">								jedis.del(setInfo.toString());</span><br><span class="line">							&#125;</span><br><span class="line"><span class="comment">//							System.out.println(setInfo);</span></span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;, <span class="number">1</span>, <span class="number">2</span>, TimeUnit.SECONDS);</span><br><span class="line"></span><br><span class="line">				<span class="comment">/**</span></span><br><span class="line"><span class="comment">				 * 设置键值的时候先查询是否存在这个键值对，存在的话查看时长，不存在的话直接发送短信</span></span><br><span class="line"><span class="comment">				 */</span></span><br><span class="line">				<span class="type">boolean</span> <span class="variable">str</span> <span class="operator">=</span> jedis.exists(phone);</span><br><span class="line">				<span class="keyword">if</span> (! str) &#123;</span><br><span class="line">					<span class="comment">//发送短息</span></span><br><span class="line">					<span class="type">String</span> <span class="variable">recode</span> <span class="operator">=</span> SmsInfo(phone);</span><br><span class="line">					jedis.set(phone, (sale + timemili));</span><br><span class="line">					<span class="keyword">return</span> recode;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="type">String</span> <span class="variable">strT</span> <span class="operator">=</span> jedis.get(phone);</span><br><span class="line">					<span class="comment">//查看请求间隔,默认是一分钟,小于一分钟继续等待，超过一分钟发送短信</span></span><br><span class="line">					<span class="keyword">if</span> (timemili - Long.parseLong(strT.substring(<span class="number">6</span>)) &lt; <span class="number">60</span>) &#123;</span><br><span class="line"><span class="comment">//						System.out.println(&quot;请一分钟后再次重试&quot; + new Date());</span></span><br><span class="line">						<span class="keyword">return</span> <span class="string">&quot;请等待一分钟后再次重试!&quot;</span>;</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">						<span class="comment">//发送短息</span></span><br><span class="line">						<span class="type">String</span> <span class="variable">recode</span> <span class="operator">=</span> SmsInfo(phone);</span><br><span class="line">						jedis.set(phone, (sale + timemili));</span><br><span class="line">						<span class="keyword">return</span> recode;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">				logger.error(e.getMessage());</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="string">&quot;false&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 发送短息</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">SmsInfo</span><span class="params">(String phone)</span>&#123;</span><br><span class="line">        这里设置短信验证码的接口和账户密码部分（自己购买的接口在这里）</span><br><span class="line">        <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span><span class="string">&quot;http://www.ztsms.cn/sendNSms.do&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span><span class="string">&quot;&quot;</span>;<span class="comment">//内容</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span><span class="string">&quot;&quot;</span>;<span class="comment">//密码</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">mobile</span> <span class="operator">=</span> phone;      <span class="comment">//号码</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span><span class="string">&quot;您本次操作的的验证码是:&quot;</span>+sale+<span class="string">&quot;，验证码五分钟内有效，请不要把验证码发送给别人！&quot;</span>;<span class="comment">//内容</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">productid</span> <span class="operator">=</span><span class="string">&quot;&quot;</span>; <span class="comment">//产品id</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">xh</span> <span class="operator">=</span><span class="string">&quot;&quot;</span>;<span class="comment">//设置为空</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">tkey</span> <span class="operator">=</span> TimeUtil.getNowTime(<span class="string">&quot;yyyyMMddHHmmss&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            content= URLEncoder.encode(content,<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        String param=<span class="string">&quot;gateway=&quot;</span>+url+<span class="string">&quot;&amp;username=&quot;</span>+username+<span class="string">&quot;&amp;password=&quot;</span>+ MD5Gen.getMD5(MD5Gen.getMD5(password)+tkey)+<span class="string">&quot;&amp;tkey=&quot;</span>+tkey+<span class="string">&quot;&amp;mobile=&quot;</span>+mobile+<span class="string">&quot;&amp;content=&quot;</span>+content+<span class="string">&quot;&amp;productid=&quot;</span>+productid+<span class="string">&quot;&amp;xh&quot;</span>+xh;</span><br><span class="line"><span class="comment">//        String ret= HttpRequest.sendGet(url, param);//sendPost or sendGet  即get和post方式</span></span><br><span class="line">        System.out.println(<span class="string">&quot;ret:&quot;</span>+ret+param);</span><br><span class="line">		<span class="keyword">return</span> sale;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="用到的工具类的部分"><a href="#用到的工具类的部分" class="headerlink" title="用到的工具类的部分"></a>用到的工具类的部分</h4><p><img src="/images/pasted-21.png" alt="upload successful"></p>
+<blockquote>
+<p>phoneUtils <a target="_blank" rel="noopener" href="https://files.cnblogs.com/files/nanstar/phoneUtils.zip">https://files.cnblogs.com/files/nanstar/phoneUtils.zip</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java%E5%AE%9E%E7%8E%B0%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E2%80%93%E8%AE%BE%E7%BD%AE%E5%8F%91%E9%80%81%E9%97%B4%E9%9A%94%E6%97%B6%E9%97%B4%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%9C%89%E6%95%88%E6%97%B6%E9%97%B4%EF%BC%88Java-Redis%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Java实现短信验证码–设置发送间隔时间，以及有效时间（Java+Redis）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%86Java%E5%8F%91%E9%80%81%E6%89%8B%E6%9C%BA%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8F%91%E9%80%81%E7%9A%84%E9%97%B4%E9%9A%94%E6%97%B6%E9%97%B4%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E6%97%B6%E9%97%B4%E5%92%8C%E6%89%8B%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%90%88%E6%B3%95%E6%80%A7%E9%AA%8C%E8%AF%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%98%B2%E6%AD%A2%E6%81%B6%E6%84%8F%E5%88%B7%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text">这篇文章，实现了Java发送手机短信验证码发送的间隔时间，以及手机验证码的有效时间和手机验证码格式的合法性验证，可以防止恶意刷接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number"></span> <span class="toc-text">代码部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E5%88%B0%E7%9A%84%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">用到的工具类的部分</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/32ffd99a/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/32ffd99a/&text=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/32ffd99a/&is_video=false&description=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java实现短信验证码--设置发送间隔时间及有效时间&body=Check out this article: http://example.com/posts/32ffd99a/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/32ffd99a/&title=Java实现短信验证码--设置发送间隔时间及有效时间"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/32ffd99a/&name=Java实现短信验证码--设置发送间隔时间及有效时间&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+
+ <div class="footer-left">
+    Copyright &copy; 2022 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li style="display:inline-block;"><a href="/">主页</a></li>
+         
+          <li style="display:inline-block;"><a href="/about/">关于</a></li>
+         
+          <li style="display:inline-block;"><a href="/archives/">文章</a></li>
+         
+          <li style="display:inline-block;"><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li style="display:inline-block;"><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+
+
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.79; background-color: #b8b8b8; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+
+
+
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+<script src="/js/canvas-nest.js"></script>
+
+
+<script src="/lib/jquery/bootstrap3-typeahead.min.js"></script>
+
+
+<script src="/lib/jquery/cb-search.js"></script>
+
+
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+
+

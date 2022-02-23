@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <meta name="description" content="关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…..,索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。  我们主要模拟用户的注册和登录加密传输密码部分   注册    用户将明文密码上传到服务器，经由服务器转换后，传给前台一个加密后的MD5值    登录  用户将加密过的密码字符串在指定位置添加自定义的字符，发送给后台，后台再次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MD5加强加密实现">
+<meta property="og:url" content="http://example.com/posts/b190df39/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…..,索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。  我们主要模拟用户的注册和登录加密传输密码部分   注册    用户将明文密码上传到服务器，经由服务器转换后，传给前台一个加密后的MD5值    登录  用户将加密过的密码字符串在指定位置添加自定义的字符，发送给后台，后台再次">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-23T02:40:30.000Z">
+<meta property="article:modified_time" content="2022-02-23T04:09:26.954Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>MD5加强加密实现</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
+    
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/ae4a30c4/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/b4170afc/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/b190df39/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/b190df39/&text=MD5加强加密实现"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/b190df39/&is_video=false&description=MD5加强加密实现"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MD5加强加密实现&body=Check out this article: http://example.com/posts/b190df39/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/b190df39/&name=MD5加强加密实现&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8EMD5%E5%8A%A0%E5%AF%86%EF%BC%8C%E7%AE%80%E5%8D%95%E6%9D%A5%E8%AF%B4%E6%B2%A1%E4%BA%8B%E5%8F%AF%E4%BB%A5%E8%B5%B7%E5%88%B0%E5%8A%A0%E5%AF%86%E6%95%B0%E6%8D%AE%E7%9A%84%E6%95%88%E6%9E%9C%E7%9A%84%EF%BC%8C%E4%BD%86%E6%98%AF%E7%BD%91%E4%B8%8A%E5%B1%82%E5%87%BA%E4%B8%8D%E7%A9%B7%E7%9A%84MD5%E5%9C%A8%E7%BA%BF%E7%A0%B4%E8%A7%A3%E2%80%A6-%E7%B4%A2%E6%80%A7%E6%89%BE%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BB%A5%E9%98%B2%E6%AD%A2MD5%E7%A0%B4%E8%A7%A3%E7%9A%84%E5%B0%8F%E9%81%93%EF%BC%8C%E6%8E%A5%E4%B8%8B%E6%9D%A5%E5%B0%B1%E4%B8%BA%E5%A4%A7%E5%AE%B6%E5%88%86%E4%BA%AB%E4%B8%8B%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E4%BB%A5%E5%8F%8A%E6%BA%90%E7%A0%81%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…..,索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">代码部分</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MD5加强加密实现
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MoDianBai</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-23T02:40:30.000Z" itemprop="datePublished">2022-02-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…-索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。"><a href="#关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…-索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。" class="headerlink" title="关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…..,索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。"></a>关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…..,索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。</h4><hr>
+<blockquote>
+<p>我们主要模拟用户的注册和登录加密传输密码部分</p>
+</blockquote>
+<blockquote>
+<p>注册  </p>
+<blockquote>
+<p>用户将明文密码上传到服务器，经由服务器转换后，传给前台一个加密后的MD5值</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>登录</p>
+<blockquote>
+<p>用户将加密过的密码字符串在指定位置添加自定义的字符，发送给后台，后台再次在某个位置，加入自定义字符，返回给前台，用户使用两次打乱过的字符串密码进行登录。后台接收到字符串后，替换掉指定的字符，解出原来的MD5值，和数据库进行匹配，匹配成功，进行登录，否则拒绝登录。</p>
+</blockquote>
+</blockquote>
+<h4 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h4><blockquote>
+<p>前台加密部分,在前台部分加密，将加密的字符串发送到后台。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">replaceStr(passwordMD5)&#123;   <span class="comment">//对用户的密码进行加密处理，回传给后台的时候进行，逆向获取密码值然后进行规则匹配，存储密码</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">substr</span> <span class="operator">=</span> passwordMD5+<span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="type">var</span> <span class="variable">a</span> <span class="operator">=</span> substr.substring(<span class="number">0</span>,<span class="number">5</span>);<span class="comment">//前五位</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">ax</span> <span class="operator">=</span> substr.substring(<span class="number">5</span>,<span class="number">6</span>)<span class="comment">//获取第六个的数值</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">b</span> <span class="operator">=</span> substr.substring(<span class="number">6</span>,<span class="number">14</span>);<span class="comment">//6-15位</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">bx</span> <span class="operator">=</span>  substr.substring(<span class="number">14</span>,<span class="number">15</span>)<span class="comment">//获取第15个的数值</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">c</span> <span class="operator">=</span> substr.substring(<span class="number">15</span>,<span class="number">21</span>)<span class="comment">//获取第16-21个的数值</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">cx</span> <span class="operator">=</span> substr.substring(<span class="number">21</span>,<span class="number">22</span>)<span class="comment">//获取第22个的数值</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">d</span> <span class="operator">=</span> substr.substring(<span class="number">22</span>)<span class="comment">//获取第22位之后的所有数值</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">md5back</span> <span class="operator">=</span> a+<span class="string">&quot;s&quot;</span>+b+<span class="string">&quot;t&quot;</span>+c+<span class="string">&quot;a&quot;</span>+d;<span class="comment">//我是处理后的字符串</span></span><br><span class="line">  <span class="type">var</span> <span class="variable">md5my</span> <span class="operator">=</span> ax+bx+cx;</span><br><span class="line">  <span class="built_in">this</span>.md5back = md5back;</span><br><span class="line">  <span class="built_in">this</span>.md5ReCode = md5my;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>后台加密部分，将前台发来的字符串再次进行加密，然后回传给前台，前台利用这个字符串进行登录。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CrossOrigin</span></span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">&quot;md5Produce&quot;</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="title class_">Map</span>&lt;<span class="title class_">String</span>, <span class="title class_">Object</span>&gt; <span class="title function_">produce</span>(<span class="params"></span></span><br><span class="line"><span class="params">        <span class="meta">@RequestParam</span>(<span class="string">&quot;md5Str&quot;</span>) <span class="built_in">String</span> md5Str,</span></span><br><span class="line"><span class="params">        <span class="meta">@RequestParam</span>(<span class="string">&quot;reCodeMd5&quot;</span>) <span class="built_in">String</span> reCodeMd5</span></span><br><span class="line"><span class="params"></span>)&#123;<span class="comment">//获取到字符串，处理后返回</span></span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="title class_">String</span> abc = md5Str.<span class="title function_">substring</span>(<span class="number">0</span>,<span class="number">7</span>) + <span class="string">&quot;r&quot;</span> + md5Str.<span class="title function_">substring</span>(<span class="number">8</span>,<span class="number">18</span>) + <span class="string">&quot;b&quot;</span> +md5Str.<span class="title function_">substring</span>(<span class="number">19</span>,<span class="number">26</span>)+<span class="string">&quot;t&quot;</span>+ md5Str.<span class="title function_">substring</span>(<span class="number">27</span>);<span class="comment">//更改后的加密字符</span></span><br><span class="line">        <span class="title class_">String</span> def = md5Str.<span class="title function_">substring</span>(<span class="number">7</span>,<span class="number">8</span>)+ md5Str.<span class="title function_">substring</span>(<span class="number">18</span>,<span class="number">19</span>) +md5Str.<span class="title function_">substring</span>(<span class="number">26</span>,<span class="number">27</span>);<span class="comment">//更改后的加密字符</span></span><br><span class="line">        <span class="title class_">String</span> ghi = reCodeMd5 + abc + def;<span class="comment">//将加密后的字符和加密用到的字符串一并返回出去</span></span><br><span class="line">        <span class="keyword">if</span>(ghi != <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title class_">WebResult</span>.<span class="title function_">success</span>().<span class="title function_">put</span>(<span class="string">&quot;dataVo&quot;</span>,ghi).<span class="title function_">toMap</span>();<span class="comment">//返回的是加密之后并且被乱码的md5值</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">catch</span>(<span class="title class_">Exception</span> e)&#123;</span><br><span class="line">      <span class="variable constant_">LOGGER</span>.<span class="title function_">error</span>(e.<span class="title function_">getMessage</span>(),e);</span><br><span class="line">      <span class="keyword">return</span> <span class="title class_">WebResult</span>.<span class="title function_">failure</span>(<span class="string">&quot;执行失败，请稍后重试！&quot;</span>).<span class="title function_">toMap</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">WebResult</span>.<span class="title function_">failure</span>(<span class="string">&quot;执行失败，请稍后重试！&quot;</span>).<span class="title function_">toMap</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>后台登录解密部分,在这里进行加密后的密码解密部分，然后使用解密到的MD5值匹配登录。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">后台（解密方法）</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取登录的md5值，然后恢复md5值进行判断</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">loginMd5</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">&quot;loginUser&quot;</span>)</span><br><span class="line">              <span class="keyword">public</span> <span class="title class_">Map</span>&lt;<span class="title class_">String</span>, <span class="title class_">Object</span>&gt; <span class="title function_">loginInfo</span>(<span class="params"></span></span><br><span class="line"><span class="params">                      <span class="meta">@RequestParam</span>(<span class="string">&quot;loginMd5&quot;</span>) <span class="built_in">String</span> loginMd5</span></span><br><span class="line"><span class="params">              </span>)&#123;</span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    <span class="comment">/*首先截取需要是哟哦哦那个到的原本字符，然后进行替换*/</span></span><br><span class="line">                    <span class="title class_">String</span> head3 = loginMd5.<span class="title function_">substring</span>(<span class="number">0</span>,<span class="number">3</span>);<span class="comment">//前三位</span></span><br><span class="line">                    <span class="title class_">String</span> foot3 = loginMd5.<span class="title function_">substring</span>(<span class="number">35</span>);<span class="comment">//后三位</span></span><br><span class="line">                    <span class="title class_">String</span> bodyCon = loginMd5.<span class="title function_">substring</span>(<span class="number">3</span>,<span class="number">35</span>);<span class="comment">//主要部分内容（32位加密字符）</span></span><br><span class="line">                    <span class="title class_">String</span> head3Pj = bodyCon.<span class="title function_">substring</span>(<span class="number">0</span>,<span class="number">5</span>) + head3.<span class="title function_">substring</span>(<span class="number">0</span>,<span class="number">1</span>) + bodyCon.<span class="title function_">substring</span>(<span class="number">6</span>,<span class="number">14</span>) + head3.<span class="title function_">substring</span>(<span class="number">1</span>,<span class="number">2</span>) + bodyCon.<span class="title function_">substring</span>(<span class="number">15</span>,<span class="number">21</span>) +  head3.<span class="title function_">substring</span>(<span class="number">2</span>,<span class="number">3</span>) + bodyCon.<span class="title function_">substring</span>(<span class="number">22</span>);</span><br><span class="line">                    <span class="title class_">String</span> footPj =  head3Pj.<span class="title function_">substring</span>(<span class="number">0</span>,<span class="number">7</span>) +foot3.<span class="title function_">substring</span>(<span class="number">0</span>,<span class="number">1</span>) + head3Pj.<span class="title function_">substring</span>(<span class="number">8</span>,<span class="number">18</span>) + foot3.<span class="title function_">substring</span>(<span class="number">1</span>,<span class="number">2</span>) +head3Pj.<span class="title function_">substring</span>(<span class="number">19</span>,<span class="number">26</span>)+foot3.<span class="title function_">substring</span>(<span class="number">2</span>,<span class="number">3</span>)+ head3Pj.<span class="title function_">substring</span>(<span class="number">27</span>);</span><br><span class="line">                    <span class="title class_">String</span> <span class="title class_">Result</span> = footPj;<span class="comment">//这是经过一波三折后来到的md5值，可以被直接破解的那种</span></span><br><span class="line"></span><br><span class="line">                &#125;<span class="keyword">catch</span>(<span class="title class_">Exception</span> e)&#123;</span><br><span class="line">                    <span class="variable constant_">LOGGER</span>.<span class="title function_">error</span>(e.<span class="title function_">getMessage</span>()+<span class="string">&quot;登录的md5值出现问题&quot;</span>,e);</span><br><span class="line">                    <span class="keyword">return</span> <span class="title class_">WebResult</span>.<span class="title function_">failure</span>(<span class="string">&quot;操作失败，请稍后重试&quot;</span>).<span class="title function_">toMap</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">              &#125;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8EMD5%E5%8A%A0%E5%AF%86%EF%BC%8C%E7%AE%80%E5%8D%95%E6%9D%A5%E8%AF%B4%E6%B2%A1%E4%BA%8B%E5%8F%AF%E4%BB%A5%E8%B5%B7%E5%88%B0%E5%8A%A0%E5%AF%86%E6%95%B0%E6%8D%AE%E7%9A%84%E6%95%88%E6%9E%9C%E7%9A%84%EF%BC%8C%E4%BD%86%E6%98%AF%E7%BD%91%E4%B8%8A%E5%B1%82%E5%87%BA%E4%B8%8D%E7%A9%B7%E7%9A%84MD5%E5%9C%A8%E7%BA%BF%E7%A0%B4%E8%A7%A3%E2%80%A6-%E7%B4%A2%E6%80%A7%E6%89%BE%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BB%A5%E9%98%B2%E6%AD%A2MD5%E7%A0%B4%E8%A7%A3%E7%9A%84%E5%B0%8F%E9%81%93%EF%BC%8C%E6%8E%A5%E4%B8%8B%E6%9D%A5%E5%B0%B1%E4%B8%BA%E5%A4%A7%E5%AE%B6%E5%88%86%E4%BA%AB%E4%B8%8B%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E4%BB%A5%E5%8F%8A%E6%BA%90%E7%A0%81%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">关于MD5加密，简单来说没事可以起到加密数据的效果的，但是网上层出不穷的MD5在线破解…..,索性找到了一个可以防止MD5破解的小道，接下来就为大家分享下这个思路以及源码。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">代码部分</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/b190df39/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/b190df39/&text=MD5加强加密实现"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/b190df39/&is_video=false&description=MD5加强加密实现"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MD5加强加密实现&body=Check out this article: http://example.com/posts/b190df39/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/b190df39/&title=MD5加强加密实现"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/b190df39/&name=MD5加强加密实现&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+
+ <div class="footer-left">
+    Copyright &copy; 2022 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li style="display:inline-block;"><a href="/">主页</a></li>
+         
+          <li style="display:inline-block;"><a href="/about/">关于</a></li>
+         
+          <li style="display:inline-block;"><a href="/archives/">文章</a></li>
+         
+          <li style="display:inline-block;"><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li style="display:inline-block;"><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+
+
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.79; background-color: #b8b8b8; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+
+
+
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+<script src="/js/canvas-nest.js"></script>
+
+
+<script src="/lib/jquery/bootstrap3-typeahead.min.js"></script>
+
+
+<script src="/lib/jquery/cb-search.js"></script>
+
+
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+
+

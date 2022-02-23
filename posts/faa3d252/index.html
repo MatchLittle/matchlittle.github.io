@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <meta name="description" content="读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景 自定义图片之后的滑动验证背景   首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）1npm install vue-puzzle-vcode html代码部分12&lt;Vcode :show&#x3D;&quot;isShow&quot; @success&#x3D;&quot;success&quot;&#x2F;&gt;其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue图片滑动验证">
+<meta property="og:url" content="http://example.com/posts/faa3d252/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景 自定义图片之后的滑动验证背景   首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）1npm install vue-puzzle-vcode html代码部分12&lt;Vcode :show&#x3D;&quot;isShow&quot; @success&#x3D;&quot;success&quot;&#x2F;&gt;其">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/pasted-6.png">
+<meta property="og:image" content="http://example.com/images/pasted-7.png">
+<meta property="og:image" content="http://example.com/images/pasted-8.png">
+<meta property="og:image" content="http://example.com/images/pasted-9.png">
+<meta property="og:image" content="http://example.com/images/pasted-10.png">
+<meta property="article:published_time" content="2022-02-23T02:16:49.000Z">
+<meta property="article:modified_time" content="2022-02-23T04:07:42.434Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/pasted-6.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>vue图片滑动验证</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
+    
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/32feb8ca/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/0/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/faa3d252/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/faa3d252/&text=vue图片滑动验证"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/faa3d252/&is_video=false&description=vue图片滑动验证"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue图片滑动验证&body=Check out this article: http://example.com/posts/faa3d252/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/faa3d252/&name=vue图片滑动验证&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E5%AE%8C%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8E%8C%E6%8F%A1%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0Vue%E7%9A%84%E5%9B%BE%E7%89%87%E6%BB%91%E5%8A%A8%E9%AA%8C%E8%AF%81%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%BB%91%E5%8A%A8%E9%AA%8C%E8%AF%81%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E6%98%BE%E7%A4%BA%E7%9A%84%E5%9B%BE%E7%89%87%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6%E6%94%AF%E6%8C%81%EF%BC%88%E5%85%88%E7%AE%80%E8%A6%81%E6%A6%82%E8%BF%B0%E4%B8%8B%E7%BB%84%E4%BB%B6%E5%8F%82%E6%95%B0%E7%9A%84%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E5%92%8C%E9%85%8D%E7%BD%AE%E4%BD%8D%E7%BD%AE%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#html%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number">3.</span> <span class="toc-text">html代码部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#js%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number">4.</span> <span class="toc-text">js代码部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%8F%82%E6%95%B0%E8%AF%A6%E6%83%85"><span class="toc-number">5.</span> <span class="toc-text">组件参数详情</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8C%85%E5%90%AB%E9%BB%98%E8%AE%A4%E7%9A%84%E9%AA%8C%E8%AF%81%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%E4%BB%A3%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text">真实项目部分代码，包含默认的验证背景图片和自定义的背景图片代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E7%9A%84%E8%B7%AF%E5%BE%84%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">本地图片的路径配置信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E8%B6%85%E8%BF%87%E9%A2%84%E5%AE%9A%E6%AC%A1%E6%95%B0%E6%8F%90%E7%A4%BA"><span class="toc-number">8.</span> <span class="toc-text">验证超过预定次数提示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%82%B9%E5%87%BB%E7%A9%BA%E7%99%BD%E8%83%8C%E6%99%AF%E7%9A%84%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">点击空白背景的提示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%86%85%E5%AE%B9%E4%B8%BA%E6%A5%BC%E4%B8%BB%E5%8E%9F%E5%88%9B%EF%BC%8C%E4%BB%A3%E7%A0%81%E6%9C%89%E4%B8%8D%E8%B6%B3%E4%B9%8B%E5%A4%84%EF%BC%8C%E8%8B%A5%E6%9C%89%E9%94%99%E8%AF%AF%E6%88%96%E7%96%91%E9%97%AE%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%95%99%E8%A8%80%E6%8E%A2%E8%AE%A8"><span class="toc-number">10.</span> <span class="toc-text">文章内容为楼主原创，代码有不足之处，若有错误或疑问，可以留言探讨</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        vue图片滑动验证
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MoDianBai</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-23T02:16:49.000Z" itemprop="datePublished">2022-02-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景"><a href="#读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景" class="headerlink" title="读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景"></a>读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景</h4><blockquote>
+<p>自定义图片之后的滑动验证背景</p>
+</blockquote>
+<p><img src="/images/pasted-6.png" alt="upload successful"></p>
+<h4 id="首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）"><a href="#首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）" class="headerlink" title="首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）"></a>首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> vue-puzzle-vcode</span><br></pre></td></tr></table></figure>
+<h4 id="html代码部分"><a href="#html代码部分" class="headerlink" title="html代码部分"></a>html代码部分</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Vcode :<span class="keyword">show</span>=<span class="string">&quot;isShow&quot;</span> <span class="meta">@success</span>=<span class="string">&quot;success&quot;</span>/&gt;</span><br><span class="line">其中<span class="meta">@success</span>是验证成功之后的回调</span><br></pre></td></tr></table></figure>
+<h4 id="js代码部分"><a href="#js代码部分" class="headerlink" title="js代码部分"></a>js代码部分</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vcode</span> <span class="keyword">from</span> <span class="string">&quot;vue-puzzle-vcode&quot;</span>;<span class="comment">//页面内引用插件</span></span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">isShow</span>: <span class="literal">false</span>, <span class="comment">// 用来控制显示是否显示图片滑动验证框</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//挂载组件</span></span><br><span class="line">    <span class="attr">components</span>:&#123;</span><br><span class="line">      <span class="title class_">Vcode</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//方法部分</span></span><br><span class="line">    <span class="attr">methods</span>:&#123;<span class="comment">// 用户通过了验证</span></span><br><span class="line">      <span class="title function_">success</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">isShow</span> = <span class="literal">false</span>; <span class="comment">// 通过验证后，手动隐藏模态框</span></span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="组件参数详情"><a href="#组件参数详情" class="headerlink" title="组件参数详情"></a>组件参数详情</h4><table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left">类型</th>
+<th align="left">默认值</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">show</td>
+<td align="left">Boolean</td>
+<td align="left">false</td>
+<td align="left">是否显示验证码弹框</td>
+</tr>
+<tr>
+<td align="left">canvasWidth</td>
+<td align="left">Number</td>
+<td align="left">310</td>
+<td align="left">主图区域的宽度</td>
+</tr>
+<tr>
+<td align="left">canvasHeight</td>
+<td align="left">Number</td>
+<td align="left">160</td>
+<td align="left">主图区域的高度</td>
+</tr>
+<tr>
+<td align="left">imgs</td>
+<td align="left">Array</td>
+<td align="left">null</td>
+<td align="left">自定义图片，见下方例子</td>
+</tr>
+<tr>
+<td align="left">successText</td>
+<td align="left">String</td>
+<td align="left">“验证通过！”</td>
+<td align="left">验证成功时的提示文字</td>
+</tr>
+<tr>
+<td align="left">failText</td>
+<td align="left">String</td>
+<td align="left">“验证失败，请重试”</td>
+<td align="left">验证失败时的提示文字</td>
+</tr>
+<tr>
+<td align="left">sliderText</td>
+<td align="left">String</td>
+<td align="left">“拖动滑块完成拼图”</td>
+<td align="left">下方滑动条里的文字</td>
+</tr>
+</tbody></table>
+<p><strong>事件</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">事件名</th>
+<th align="left">返回值</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">success</td>
+<td align="left">偏差值</td>
+<td align="left">验证通过时会触发，返回值是用户移动的距离跟目标距离的偏差值px</td>
+</tr>
+<tr>
+<td align="left">fail</td>
+<td align="left">偏差值</td>
+<td align="left">验证失败时会触发，返回值同上</td>
+</tr>
+<tr>
+<td align="left">close</td>
+<td align="left">null</td>
+<td align="left">用户点击遮罩层的回调</td>
+</tr>
+</tbody></table>
+<h4 id="真实项目部分代码，包含默认的验证背景图片和自定义的背景图片代码"><a href="#真实项目部分代码，包含默认的验证背景图片和自定义的背景图片代码" class="headerlink" title="真实项目部分代码，包含默认的验证背景图片和自定义的背景图片代码"></a>真实项目部分代码，包含默认的验证背景图片和自定义的背景图片代码</h4><blockquote>
+<p>使用到的十张图片下载地址 <a target="_blank" rel="noopener" href="https://files.cnblogs.com/files/nanstar/rePhoto.zip">https://files.cnblogs.com/files/nanstar/rePhoto.zip</a><br>组件的默认背景</p>
+</blockquote>
+<p><img src="/images/pasted-7.png" alt="upload successful"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HTML部分</span></span><br><span class="line">&lt;!--图片验证码部分--&gt;</span><br><span class="line">&lt;!--默认背景图片--&gt;</span><br><span class="line">&lt;!--<span class="language-xml"><span class="tag">&lt;<span class="name">Vcode</span> <span class="attr">:show</span>=<span class="string">&quot;isShow&quot;</span> @<span class="attr">success</span>=<span class="string">&quot;success&quot;</span> @<span class="attr">fail</span>=<span class="string">&quot;fails&quot;</span> @<span class="attr">close</span>=<span class="string">&quot;closeRe&quot;</span>/&gt;</span></span>--&gt;</span><br><span class="line">&lt;!--自定义本地图片--&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">Vcode</span> <span class="attr">:imgs</span>=<span class="string">&quot;[img1,img2,img3,img4,img5,img6,img7,img8,img9,img10]&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml"><span class="attr">:show</span>=<span class="string">&quot;isShow&quot;</span> @<span class="attr">success</span>=<span class="string">&quot;success&quot;</span> @<span class="attr">fail</span>=<span class="string">&quot;fails&quot;</span> @<span class="attr">close</span>=<span class="string">&quot;closeRe&quot;</span>/&gt;</span></span></span><br><span class="line">&lt;!--图片验证码部分--&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//JS部分</span></span><br><span class="line"><span class="comment">//引入和挂载</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vcode</span> <span class="keyword">from</span> <span class="string">&quot;vue-puzzle-vcode&quot;</span>;</span><br><span class="line"><span class="comment">//自定义的时候使用了10张图片（我将图片下载到了本地项目内容，所以使用的是路径引用）</span></span><br><span class="line"><span class="keyword">import</span> img1 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/1.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img2 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/2.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img3 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/3.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img4 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/4.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img5 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/5.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img6 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/6.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img7 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/7.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img8 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/8.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img9 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/9.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">import</span> img10 <span class="keyword">from</span> <span class="string">&quot;../../../public/img/rePhoto/10.jpg&quot;</span>;</span><br><span class="line">    </span><br><span class="line"><span class="attr">components</span>: &#123; <span class="title class_">Vcode</span> &#125;,</span><br><span class="line"></span><br><span class="line"><span class="comment">//参数属性设置</span></span><br><span class="line"><span class="attr">isShow</span>: <span class="literal">false</span>, <span class="comment">// 验证码模态框是否出现，</span></span><br><span class="line"><span class="attr">photoHua</span>:<span class="number">0</span>,<span class="comment">//图片滑动验证的错误次数</span></span><br><span class="line">  <span class="comment">//自定义图片的验证部分（返回值部分）</span></span><br><span class="line">                img1,</span><br><span class="line">                img2,</span><br><span class="line">                img3,</span><br><span class="line">                img4,</span><br><span class="line">                img5,</span><br><span class="line">                img6,</span><br><span class="line">                img7,</span><br><span class="line">                img8,</span><br><span class="line">                img9,</span><br><span class="line">                img10,</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 成功的回调</span></span><br><span class="line"> <span class="title function_">success</span>(<span class="params"></span>)&#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">isShow</span> = <span class="literal">false</span>; <span class="comment">// 通过验证后，关闭图片验证弹出框，让用户继续填写验证码</span></span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">$notify</span>.<span class="title function_">success</span>(&#123;</span><br><span class="line">                    <span class="attr">title</span>:<span class="string">&quot;提示&quot;</span>,</span><br><span class="line">                    <span class="attr">message</span>:<span class="string">&quot;请认证填写验证码&quot;</span>,</span><br><span class="line">                    <span class="attr">duration</span>:<span class="number">5000</span></span><br><span class="line">                &#125;)</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">loginForm</span>.<span class="property">recode</span> = <span class="string">&quot;&quot;</span>;<span class="comment">//设置验证码部分是空，若是用到项目不可以，请删除这句代码</span></span><br><span class="line">            &#125;,</span><br><span class="line"> <span class="comment">//失败的回调，失败的逻辑是，用户失败指定次数之后，加入弹窗提示信息</span></span><br><span class="line"> <span class="title function_">fails</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">photoHua</span> += <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">photoHua</span> &gt; <span class="number">5</span>)&#123;</span><br><span class="line">            <span class="variable language_">this</span>.$message(&#123;</span><br><span class="line">            <span class="attr">message</span>: <span class="string">&#x27;其实ψ(*｀ー´)ψ......你要是一直拼不成功，我会让你一直拼下去的哟...&#x27;</span>,</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;warning&#x27;</span></span><br><span class="line">            &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="comment">//点击图片验证的背景部分事件</span></span><br><span class="line"><span class="title function_">closeRe</span>(<span class="params"></span>)&#123;</span><br><span class="line">                <span class="variable language_">this</span>.$message(&#123;</span><br><span class="line">                    <span class="attr">message</span>: <span class="string">&#x27;请完成滑动验证，验证成功之后验证框会自动消失...(๑╹◡╹)ﾉ&#x27;</span>,</span><br><span class="line">                    <span class="attr">type</span>: <span class="string">&#x27;warning&#x27;</span></span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;,</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="本地图片的路径配置信息"><a href="#本地图片的路径配置信息" class="headerlink" title="本地图片的路径配置信息"></a>本地图片的路径配置信息</h4><p><img src="/images/pasted-8.png" alt="upload successful"></p>
+<h4 id="验证超过预定次数提示"><a href="#验证超过预定次数提示" class="headerlink" title="验证超过预定次数提示"></a>验证超过预定次数提示</h4><p><img src="/images/pasted-9.png" alt="upload successful"></p>
+<h4 id="点击空白背景的提示"><a href="#点击空白背景的提示" class="headerlink" title="点击空白背景的提示"></a>点击空白背景的提示</h4><p><img src="/images/pasted-10.png" alt="upload successful"></p>
+<h4 id="文章内容为楼主原创，代码有不足之处，若有错误或疑问，可以留言探讨"><a href="#文章内容为楼主原创，代码有不足之处，若有错误或疑问，可以留言探讨" class="headerlink" title="文章内容为楼主原创，代码有不足之处，若有错误或疑问，可以留言探讨"></a>文章内容为楼主原创，代码有不足之处，若有错误或疑问，可以留言探讨</h4>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E5%AE%8C%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8E%8C%E6%8F%A1%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0Vue%E7%9A%84%E5%9B%BE%E7%89%87%E6%BB%91%E5%8A%A8%E9%AA%8C%E8%AF%81%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%BB%91%E5%8A%A8%E9%AA%8C%E8%AF%81%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E6%98%BE%E7%A4%BA%E7%9A%84%E5%9B%BE%E7%89%87%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">读完这篇文章，可以掌握如何实现Vue的图片滑动验证，以及滑动验证的自定义显示的图片背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6%E6%94%AF%E6%8C%81%EF%BC%88%E5%85%88%E7%AE%80%E8%A6%81%E6%A6%82%E8%BF%B0%E4%B8%8B%E7%BB%84%E4%BB%B6%E5%8F%82%E6%95%B0%E7%9A%84%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E5%92%8C%E9%85%8D%E7%BD%AE%E4%BD%8D%E7%BD%AE%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">首先安装插件支持（先简要概述下组件参数的配置信息和配置位置）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#html%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number">3.</span> <span class="toc-text">html代码部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#js%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="toc-number">4.</span> <span class="toc-text">js代码部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%8F%82%E6%95%B0%E8%AF%A6%E6%83%85"><span class="toc-number">5.</span> <span class="toc-text">组件参数详情</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8C%85%E5%90%AB%E9%BB%98%E8%AE%A4%E7%9A%84%E9%AA%8C%E8%AF%81%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%E4%BB%A3%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text">真实项目部分代码，包含默认的验证背景图片和自定义的背景图片代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E7%9A%84%E8%B7%AF%E5%BE%84%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">本地图片的路径配置信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E8%B6%85%E8%BF%87%E9%A2%84%E5%AE%9A%E6%AC%A1%E6%95%B0%E6%8F%90%E7%A4%BA"><span class="toc-number">8.</span> <span class="toc-text">验证超过预定次数提示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%82%B9%E5%87%BB%E7%A9%BA%E7%99%BD%E8%83%8C%E6%99%AF%E7%9A%84%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">点击空白背景的提示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%86%85%E5%AE%B9%E4%B8%BA%E6%A5%BC%E4%B8%BB%E5%8E%9F%E5%88%9B%EF%BC%8C%E4%BB%A3%E7%A0%81%E6%9C%89%E4%B8%8D%E8%B6%B3%E4%B9%8B%E5%A4%84%EF%BC%8C%E8%8B%A5%E6%9C%89%E9%94%99%E8%AF%AF%E6%88%96%E7%96%91%E9%97%AE%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%95%99%E8%A8%80%E6%8E%A2%E8%AE%A8"><span class="toc-number">10.</span> <span class="toc-text">文章内容为楼主原创，代码有不足之处，若有错误或疑问，可以留言探讨</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/faa3d252/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/faa3d252/&text=vue图片滑动验证"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/faa3d252/&is_video=false&description=vue图片滑动验证"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue图片滑动验证&body=Check out this article: http://example.com/posts/faa3d252/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/faa3d252/&title=vue图片滑动验证"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/faa3d252/&name=vue图片滑动验证&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+
+ <div class="footer-left">
+    Copyright &copy; 2022 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li style="display:inline-block;"><a href="/">主页</a></li>
+         
+          <li style="display:inline-block;"><a href="/about/">关于</a></li>
+         
+          <li style="display:inline-block;"><a href="/archives/">文章</a></li>
+         
+          <li style="display:inline-block;"><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li style="display:inline-block;"><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+
+
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.79; background-color: #b8b8b8; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+
+
+
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+<script src="/js/canvas-nest.js"></script>
+
+
+<script src="/lib/jquery/bootstrap3-typeahead.min.js"></script>
+
+
+<script src="/lib/jquery/cb-search.js"></script>
+
+
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+
+

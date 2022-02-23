@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=zh>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <meta name="description" content="基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目首先需要下载Redis的服务器包 GitHub下载地址 https:&#x2F;&#x2F;github.com&#x2F;tporadowski&#x2F;redis&#x2F;releases  我们选择下载Redis服务器zip压缩包 我们把这个文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot项目连接Redis操作">
+<meta property="og:url" content="http://example.com/posts/655a9a5a/index.html">
+<meta property="og:site_name" content="Mdb">
+<meta property="og:description" content="基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目首先需要下载Redis的服务器包 GitHub下载地址 https:&#x2F;&#x2F;github.com&#x2F;tporadowski&#x2F;redis&#x2F;releases  我们选择下载Redis服务器zip压缩包 我们把这个文">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/pasted-22.png">
+<meta property="og:image" content="http://example.com/images/pasted-23.png">
+<meta property="og:image" content="http://example.com/images/pasted-24.png">
+<meta property="og:image" content="http://example.com/images/pasted-25.png">
+<meta property="og:image" content="http://example.com/images/pasted-26.png">
+<meta property="og:image" content="http://example.com/images/pasted-27.png">
+<meta property="og:image" content="http://example.com/images/pasted-28.png">
+<meta property="og:image" content="http://example.com/images/pasted-29.png">
+<meta property="og:image" content="http://example.com/images/pasted-30.png">
+<meta property="article:published_time" content="2022-02-23T02:26:37.000Z">
+<meta property="article:modified_time" content="2022-02-23T05:35:16.569Z">
+<meta property="article:author" content="MoDianBai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/pasted-22.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>springboot项目连接Redis操作</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Mdb" type="application/atom+xml" />
+    
+
+
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/9b20f136/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/32ffd99a/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/655a9a5a/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/655a9a5a/&text=springboot项目连接Redis操作"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/655a9a5a/&is_video=false&description=springboot项目连接Redis操作"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=springboot项目连接Redis操作&body=Check out this article: http://example.com/posts/655a9a5a/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/655a9a5a/&name=springboot项目连接Redis操作&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%BC%93%E5%AD%98%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%EF%BC%8CC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%EF%BC%8C%E6%94%AF%E6%8C%81%E7%BD%91%E7%BB%9C%E3%80%81%E5%8F%AF%E5%9F%BA%E4%BA%8E%E5%86%85%E5%AD%98%E4%BA%A6%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%97%A5%E5%BF%97%E5%9E%8B%E3%80%81Key-Value%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%B9%B6%E6%8F%90%E4%BE%9B%E5%A4%9A%E7%A7%8D%E8%AF%AD%E8%A8%80%E7%9A%84API%EF%BC%8C%E6%93%8D%E4%BD%9C%E5%BE%88%E6%98%AF%E8%88%92%E6%9C%8D%EF%BC%8C%E6%88%91%E4%BB%AC%E5%85%88%E6%9D%A5%E8%B7%91%E9%80%9ARedis%E6%9C%8D%E5%8A%A1%EF%BC%8C%E5%B9%B6%E8%BF%9E%E4%B8%8Aspringboot%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E4%B8%8B%E8%BD%BDRedis%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8C%85"><span class="toc-number">2.</span> <span class="toc-text">首先需要下载Redis的服务器包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E9%80%89%E6%8B%A9%E4%B8%8B%E8%BD%BDRedis%E6%9C%8D%E5%8A%A1%E5%99%A8zip%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text">我们选择下载Redis服务器zip压缩包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E6%8A%8A%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E8%A7%A3%E5%8E%8B%E5%88%B0%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C"><span class="toc-number">4.</span> <span class="toc-text">我们把这个文件解压到文件夹里</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E7%9D%80%E6%88%91%E4%BB%AC%E7%82%B9%E5%87%BB%EF%BC%8C%E8%BF%9B%E5%88%B0%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C%E9%9D%A2%EF%BC%8C%E7%84%B6%E5%90%8E%E5%86%8D%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C%EF%BC%8C%E6%8C%89%E7%9D%80%E5%B7%A6shift%E5%8D%95%E5%87%BB%E5%8F%B3%E9%94%AE%EF%BC%8C%E9%80%89%E6%8B%A9powershell%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E5%86%8D%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%87%8C%E8%BE%93%E5%85%A5%E2%80%94%E2%80%94-redis-server-exe%EF%BC%8C%E5%BC%80%E5%90%AFredis%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">接着我们点击，进到这个文件夹里面，然后再这个文件夹里，按着左shift单击右键，选择powershell命令行，再命令行里输入——- .\redis-server.exe，开启redis服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0redis%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%90%AF%E5%8A%A8%E4%BF%A1%E6%81%AF%EF%BC%8C%E5%90%AF%E5%8A%A8%E5%AE%8C%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">然后就可以看到redis服务器的启动信息，启动完成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E7%9D%80%E6%88%91%E4%BB%AC%E6%9D%A5%E5%88%B0springboot%E5%86%99%E4%B8%80%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%B1%BB"><span class="toc-number">7.</span> <span class="toc-text">接着我们来到springboot写一个测试类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%95%88%E6%9E%9C%E5%9B%BE%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E5%B7%B2%E7%BB%8F%E8%BF%9E%E6%8E%A5%E6%88%90%E5%8A%9F"><span class="toc-number">8.</span> <span class="toc-text">执行效果图，可以看到已经连接成功</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">9.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E5%91%BD%E4%BB%A4%E5%8F%AF%E4%BB%A5%E5%8F%82%E8%A7%81%E5%B8%AE%E5%8A%A9%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%88%96%E8%80%85%E6%98%AF%E5%85%B6%E4%BB%96%E6%96%87%E7%AB%A0"><span class="toc-number">10.</span> <span class="toc-text">更多命令可以参见帮助命令，或者是其他文章</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        springboot项目连接Redis操作
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MoDianBai</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-23T02:26:37.000Z" itemprop="datePublished">2022-02-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目"><a href="#基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目" class="headerlink" title="基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目"></a>基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目</h4><h4 id="首先需要下载Redis的服务器包"><a href="#首先需要下载Redis的服务器包" class="headerlink" title="首先需要下载Redis的服务器包"></a>首先需要下载Redis的服务器包</h4><blockquote>
+<p>GitHub下载地址 <a target="_blank" rel="noopener" href="https://github.com/tporadowski/redis/releases">https://github.com/tporadowski/redis/releases</a></p>
+</blockquote>
+<h4 id="我们选择下载Redis服务器zip压缩包"><a href="#我们选择下载Redis服务器zip压缩包" class="headerlink" title="我们选择下载Redis服务器zip压缩包"></a>我们选择下载Redis服务器zip压缩包</h4><p><img src="/images/pasted-22.png" alt="upload successful"></p>
+<h4 id="我们把这个文件解压到文件夹里"><a href="#我们把这个文件解压到文件夹里" class="headerlink" title="我们把这个文件解压到文件夹里"></a>我们把这个文件解压到文件夹里</h4><p><img src="/images/pasted-23.png" alt="upload successful"></p>
+<h4 id="接着我们点击，进到这个文件夹里面，然后再这个文件夹里，按着左shift单击右键，选择powershell命令行，再命令行里输入——-redis-server-exe，开启redis服务"><a href="#接着我们点击，进到这个文件夹里面，然后再这个文件夹里，按着左shift单击右键，选择powershell命令行，再命令行里输入——-redis-server-exe，开启redis服务" class="headerlink" title="接着我们点击，进到这个文件夹里面，然后再这个文件夹里，按着左shift单击右键，选择powershell命令行，再命令行里输入——- .\redis-server.exe，开启redis服务"></a>接着我们点击，进到这个文件夹里面，然后再这个文件夹里，按着左shift单击右键，选择powershell命令行，再命令行里输入——- .\redis-server.exe，开启redis服务</h4><p><img src="/images/pasted-24.png" alt="upload successful"></p>
+<h4 id="然后就可以看到redis服务器的启动信息，启动完成"><a href="#然后就可以看到redis服务器的启动信息，启动完成" class="headerlink" title="然后就可以看到redis服务器的启动信息，启动完成"></a>然后就可以看到redis服务器的启动信息，启动完成</h4><p><img src="/images/pasted-25.png" alt="upload successful"></p>
+<h4 id="接着我们来到springboot写一个测试类"><a href="#接着我们来到springboot写一个测试类" class="headerlink" title="接着我们来到springboot写一个测试类"></a>接着我们来到springboot写一个测试类</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">需要的pom依赖</span><br><span class="line"></span><br><span class="line">     &lt;dependency&gt;</span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.data<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">testRedis</span>(<span class="params"></span>)&#123; </span><br><span class="line">		<span class="comment">//连接本地的 Redis 服务</span></span><br><span class="line">		<span class="title class_">Jedis</span> jedis = <span class="keyword">new</span> <span class="title class_">Jedis</span>(<span class="string">&quot;http://localhost:6379&quot;</span>);</span><br><span class="line">		<span class="title class_">System</span>.<span class="property">out</span>.<span class="title function_">println</span>(<span class="string">&quot;连接成功&quot;</span>);</span><br><span class="line">		<span class="comment">//查看服务是否运行</span></span><br><span class="line">		<span class="title class_">System</span>.<span class="property">out</span>.<span class="title function_">println</span>(<span class="string">&quot;服务正在运行: &quot;</span>+jedis.<span class="title function_">ping</span>());</span><br><span class="line">		<span class="title class_">System</span>.<span class="property">out</span>.<span class="title function_">println</span>(<span class="string">&quot;======================key==========================&quot;</span>);</span><br><span class="line">		<span class="comment">//清除当前数据库所有数据</span></span><br><span class="line">		jedis.<span class="title function_">flushDB</span>();</span><br><span class="line">		<span class="comment">//设置键值对</span></span><br><span class="line">		jedis.<span class="title function_">set</span>(<span class="string">&quot;xiaohua&quot;</span>,<span class="string">&quot;我是小花&quot;</span>);</span><br><span class="line">		<span class="comment">//查看存储的键的总数</span></span><br><span class="line">		<span class="title class_">System</span>.<span class="property">out</span>.<span class="title function_">println</span>(jedis.<span class="title function_">dbSize</span>());</span><br><span class="line">		<span class="comment">//取出设置的键值对并打印</span></span><br><span class="line">		<span class="title class_">System</span>.<span class="property">out</span>.<span class="title function_">println</span>(jedis.<span class="title function_">get</span>(<span class="string">&quot;xiaohua&quot;</span>));</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="执行效果图，可以看到已经连接成功"><a href="#执行效果图，可以看到已经连接成功" class="headerlink" title="执行效果图，可以看到已经连接成功"></a>执行效果图，可以看到已经连接成功</h4><p><img src="/images/pasted-26.png" alt="upload successful"></p>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">ping 用于检测redis服务是否启动</span><br><span class="line"><span class="selector-tag">del</span>(<span class="built_in">key</span>(string)) 删除key</span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(key(string)</span></span>,<span class="built_in">value</span>(string))设置key键值</span><br><span class="line"><span class="function"><span class="title">get</span><span class="params">(key(string)</span></span>)获取设置的键值</span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(key(string)</span></span>,<span class="built_in">value</span>(Object))设置对象值</span><br><span class="line"><span class="function"><span class="title">get</span><span class="params">(key(string)</span></span>)取出对象值</span><br><span class="line"><span class="function"><span class="title">key</span><span class="params">(<span class="string">&quot;*&quot;</span>)</span></span>获取所有的键值</span><br><span class="line"><span class="function"><span class="title">dbsize</span><span class="params">()</span></span>获取所有的键总数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1</span>）连接操作命令</span><br><span class="line">quit：关闭连接（connection）</span><br><span class="line">auth：简单密码认证</span><br><span class="line">help cmd： 查看cmd帮助，例如：help quit</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>）持久化</span><br><span class="line">save：将数据同步保存到磁盘</span><br><span class="line">bgsave：将数据异步保存到磁盘</span><br><span class="line">lastsave：返回上次成功将数据保存到磁盘的Unix时戳</span><br><span class="line">shundown：将数据同步保存到磁盘，然后关闭服务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">3</span>）远程服务控制</span><br><span class="line">info：提供服务器的信息和统计</span><br><span class="line">monitor：实时转储收到的请求</span><br><span class="line">slaveof：改变复制策略设置</span><br><span class="line">config：在运行时配置Redis服务器</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>）对value操作的命令</span><br><span class="line"><span class="function"><span class="title">exists</span><span class="params">(key)</span></span>：确认一个key是否存在</span><br><span class="line"><span class="selector-tag">del</span>(key)：删除一个key</span><br><span class="line"><span class="function"><span class="title">type</span><span class="params">(key)</span></span>：返回值的类型</span><br><span class="line"><span class="function"><span class="title">keys</span><span class="params">(pattern)</span></span>：返回满足给定pattern的所有key</span><br><span class="line">randomkey：随机返回key空间的一个</span><br><span class="line"><span class="function"><span class="title">keyrename</span><span class="params">(oldname, newname)</span></span>：重命名key</span><br><span class="line">dbsize：返回当前数据库中key的数目</span><br><span class="line">expire：设定一个key的活动时间（s）</span><br><span class="line">ttl：获得一个key的活动时间</span><br><span class="line"><span class="function"><span class="title">select</span><span class="params">(index)</span></span>：按索引查询</span><br><span class="line"><span class="function"><span class="title">move</span><span class="params">(key, dbindex)</span></span>：移动当前数据库中的key到dbindex数据库</span><br><span class="line">flushdb：删除当前选择数据库中的所有key</span><br><span class="line">flushall：删除所有数据库中的所有key</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/images/pasted-27.png" alt="upload successful"></p>
+<p><img src="/images/pasted-28.png" alt="upload successful"></p>
+<p><img src="/images/pasted-29.png" alt="upload successful"></p>
+<p><img src="/images/pasted-30.png" alt="upload successful"></p>
+<h4 id="更多命令可以参见帮助命令，或者是其他文章"><a href="#更多命令可以参见帮助命令，或者是其他文章" class="headerlink" title="更多命令可以参见帮助命令，或者是其他文章"></a>更多命令可以参见帮助命令，或者是其他文章</h4><blockquote>
+<p>菜鸟教程 <a target="_blank" rel="noopener" href="https://www.runoob.com/redis/redis-tutorial.html">https://www.runoob.com/redis/redis-tutorial.html</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">文章</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%BC%93%E5%AD%98%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%EF%BC%8CC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%EF%BC%8C%E6%94%AF%E6%8C%81%E7%BD%91%E7%BB%9C%E3%80%81%E5%8F%AF%E5%9F%BA%E4%BA%8E%E5%86%85%E5%AD%98%E4%BA%A6%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%97%A5%E5%BF%97%E5%9E%8B%E3%80%81Key-Value%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%B9%B6%E6%8F%90%E4%BE%9B%E5%A4%9A%E7%A7%8D%E8%AF%AD%E8%A8%80%E7%9A%84API%EF%BC%8C%E6%93%8D%E4%BD%9C%E5%BE%88%E6%98%AF%E8%88%92%E6%9C%8D%EF%BC%8C%E6%88%91%E4%BB%AC%E5%85%88%E6%9D%A5%E8%B7%91%E9%80%9ARedis%E6%9C%8D%E5%8A%A1%EF%BC%8C%E5%B9%B6%E8%BF%9E%E4%B8%8Aspringboot%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">基于缓存的数据库存储，C语言开发，支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API，操作很是舒服，我们先来跑通Redis服务，并连上springboot项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E4%B8%8B%E8%BD%BDRedis%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8C%85"><span class="toc-number">2.</span> <span class="toc-text">首先需要下载Redis的服务器包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E9%80%89%E6%8B%A9%E4%B8%8B%E8%BD%BDRedis%E6%9C%8D%E5%8A%A1%E5%99%A8zip%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text">我们选择下载Redis服务器zip压缩包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E6%8A%8A%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E8%A7%A3%E5%8E%8B%E5%88%B0%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C"><span class="toc-number">4.</span> <span class="toc-text">我们把这个文件解压到文件夹里</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E7%9D%80%E6%88%91%E4%BB%AC%E7%82%B9%E5%87%BB%EF%BC%8C%E8%BF%9B%E5%88%B0%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C%E9%9D%A2%EF%BC%8C%E7%84%B6%E5%90%8E%E5%86%8D%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C%EF%BC%8C%E6%8C%89%E7%9D%80%E5%B7%A6shift%E5%8D%95%E5%87%BB%E5%8F%B3%E9%94%AE%EF%BC%8C%E9%80%89%E6%8B%A9powershell%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E5%86%8D%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%87%8C%E8%BE%93%E5%85%A5%E2%80%94%E2%80%94-redis-server-exe%EF%BC%8C%E5%BC%80%E5%90%AFredis%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">接着我们点击，进到这个文件夹里面，然后再这个文件夹里，按着左shift单击右键，选择powershell命令行，再命令行里输入——- .\redis-server.exe，开启redis服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0redis%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%90%AF%E5%8A%A8%E4%BF%A1%E6%81%AF%EF%BC%8C%E5%90%AF%E5%8A%A8%E5%AE%8C%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">然后就可以看到redis服务器的启动信息，启动完成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E7%9D%80%E6%88%91%E4%BB%AC%E6%9D%A5%E5%88%B0springboot%E5%86%99%E4%B8%80%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%B1%BB"><span class="toc-number">7.</span> <span class="toc-text">接着我们来到springboot写一个测试类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%95%88%E6%9E%9C%E5%9B%BE%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E5%B7%B2%E7%BB%8F%E8%BF%9E%E6%8E%A5%E6%88%90%E5%8A%9F"><span class="toc-number">8.</span> <span class="toc-text">执行效果图，可以看到已经连接成功</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">9.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E5%91%BD%E4%BB%A4%E5%8F%AF%E4%BB%A5%E5%8F%82%E8%A7%81%E5%B8%AE%E5%8A%A9%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%88%96%E8%80%85%E6%98%AF%E5%85%B6%E4%BB%96%E6%96%87%E7%AB%A0"><span class="toc-number">10.</span> <span class="toc-text">更多命令可以参见帮助命令，或者是其他文章</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/posts/655a9a5a/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/posts/655a9a5a/&text=springboot项目连接Redis操作"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/posts/655a9a5a/&is_video=false&description=springboot项目连接Redis操作"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=springboot项目连接Redis操作&body=Check out this article: http://example.com/posts/655a9a5a/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/posts/655a9a5a/&title=springboot项目连接Redis操作"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/posts/655a9a5a/&name=springboot项目连接Redis操作&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+
+ <div class="footer-left">
+    Copyright &copy; 2022 MoDianBai
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li style="display:inline-block;"><a href="/">主页</a></li>
+         
+          <li style="display:inline-block;"><a href="/about/">关于</a></li>
+         
+          <li style="display:inline-block;"><a href="/archives/">文章</a></li>
+         
+          <li style="display:inline-block;"><a target="_blank" rel="noopener" href="https://gitee.com/nanstar">项目</a></li>
+         
+          <li style="display:inline-block;"><a href="/guestbook">留言</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+
+
+<div class="cb-search-tool" style="position: fixed; top: 0px ; bottom: 0px; left: 0px; right:  0px;
+        opacity: 0.79; background-color: #b8b8b8; z-index: 9999; display: none;">
+
+    <input type="text" class="cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签" />
+
+    <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="/hexo-search/search/img/cb-close.png"  id="cb-close-btn"/>
+    </div>
+</div>
+
+<div style="position: fixed; right: 16px; bottom: 20px;">
+    <img src="/hexo-search/search/img/cb-search.png"  id="cb-search-btn"  title="双击ctrl试一下"/>
+</div>
+
+<link rel="stylesheet" href="/hexo-search/search/css/cb-search.css">
+
+
+
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+<script src="/js/canvas-nest.js"></script>
+
+
+<script src="/lib/jquery/bootstrap3-typeahead.min.js"></script>
+
+
+<script src="/lib/jquery/cb-search.js"></script>
+
+
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+
+
